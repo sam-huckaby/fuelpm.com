@@ -13,7 +13,9 @@ export default function Home() {
         <button className="rounded bg-transparent text-white h-10 w-10 text-3xl flex flex-row justify-center">&equiv;</button>
       </div>
 
-      <main className="flex flex-col items-center justify-start w-full flex-1 p-5 mt-5">
+      <button className="hidden md:inline-block fixed top-5 right-5 rounded bg-orange-600 p-2 text-white">Sign In</button>
+
+      <main className="flex flex-col items-center justify-start w-full flex-1 p-5 mt-5 md:mt-10">
         <div className="text-4xl font-bold">
           <span>Are you tired of <span className="underline">endless</span> project management?</span>
         </div>

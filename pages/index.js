@@ -36,6 +36,8 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           Powered by{' '}
+          <img src="/netlify.svg" alt="Netlify Logo" className="h-6 ml-2" />
+          {' '}{' '}
           <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
         </a>
       </footer>

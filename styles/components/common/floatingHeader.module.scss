@@ -1,0 +1,18 @@
+// Logic
+.fuel-menu-row {
+    width: 100%;
+    min-height: 3.5rem;
+    box-sizing: border-box;
+}
+
+.fuel-nav-container:not([data-scroll='0']) {
+    .fuel-menu-row {
+        position: fixed;
+        top: 0;
+        box-shadow: 0 0 .5em rgba(0, 0, 0, .5);
+    }
+
+    .fuel-header-logo-container {
+        display: flex;
+    }
+}

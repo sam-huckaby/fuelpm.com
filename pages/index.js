@@ -6,6 +6,34 @@ import FloatingHeader from '../components/common/floatingHeader.component';
 export default function Home() {
   const [concept, setConcept] = useState(0);
 
+  function smoothScroll(target) {
+    var scrollContainer = target;
+    do { //find scroll container
+        scrollContainer = scrollContainer.parentNode;
+        if (!scrollContainer) return;
+        scrollContainer.scrollTop += 1;
+    } while (scrollContainer.scrollTop == 0);
+
+    var targetY = 0;
+    do { //find the top of target relatively to the container
+        if (target == scrollContainer) break;
+        targetY += target.offsetTop - 30;
+    } while (target = target.offsetParent);
+
+    scroll = function(c, a, b, i) {
+        i++; if (i > 30) return;
+        c.scrollTop = a + (b - a) / 30 * i;
+        setTimeout(function(){ scroll(c, a, b, i); }, 20);
+    }
+    // start scrolling
+    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+  }
+
+  function toggleConcept(index) {
+    setConcept(index);
+    smoothScroll(document.getElementById('concept_bar'));
+  }
+
   function renderConcept(index) {
     switch (index) {
       default:
@@ -94,25 +122,30 @@ export default function Home() {
       <div className="fuel-bigscreen-container h-screen w-screen flex flex-col bg-orange-600">
         <FloatingHeader></FloatingHeader>
         <div className="fuel-bigscreen flex-auto flex flex-col justify-center items-center">
-          <div className="fuel-logo-container flex flex-row text-7xl font-mono">
+          <div className="fuel-logo-container text-black flex flex-row text-7xl font-mono">
             <span className="fuel-logo-fuel">Fuel</span>
             <div className="fuel-logo-pm-container flex flex-col justify-center items-center">
               <span className="fuel-logo-p text-3xl leading-8">P</span>
               <span className="fuel-logo-m text-3xl leading-8">M</span>
             </div>
           </div>
-          <span>Keep your projects running on full.</span>
+          <span className="text-black">Keep your projects running on full.</span>
         </div>
-        <div className="fuel-concept-bar bg-zinc-700 flex flex-row">
-          <button onClick={() => setConcept(0)} className={((concept === 0) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Simple</button>
-          <button onClick={() => setConcept(1)} className={((concept === 1) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-zinc-800 border-r`}>Shareable</button>
-          <button onClick={() => setConcept(2)} className={((concept === 2) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Trackable</button>
+        <div id="concept_bar" className="fuel-concept-bar bg-zinc-700 flex flex-row">
+          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Simple</button>
+          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-zinc-800 border-r`}>Shareable</button>
+          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Trackable</button>
         </div>
       </div>
 
-      <main className="flex flex-col items-center justify-start w-full flex-1 p-5 mt-5 md:mt-10">
+      <main id="concept_container" className="flex flex-col items-center justify-start w-full flex-1 p-5 mt-5 md:mt-10">
         {renderConcept(concept)}
       </main>
+
+      <div className={`fuel-call-to-action flex flex-col`}>
+        <div className="font-bold mb-5">Ready to get to work?</div>
+        <button className={`fuel-cta-signup-button rounded bg-orange-600 text-white p-3 mb-5`}>Get Started</button>
+      </div>
 
       <footer className="flex items-center justify-center w-full h-24 border-t flex-col">
         <div className="netlify-container flex flex-row">
@@ -128,6 +161,9 @@ export default function Home() {
             Powered by{' '}
             <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
           </a>
+        </div>
+        <div className="samhuckaby-container">
+          Built by <a href="https://samhuckaby.com/" target="_blank" className="text-orange-600">Sam Huckaby</a>
         </div>
       </footer>
     </div>

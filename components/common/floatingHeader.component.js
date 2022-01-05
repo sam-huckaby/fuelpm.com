@@ -51,9 +51,9 @@ export default class FloatingHeader extends Component {
 
     render() {
         return (
-            <div className={`${styles['fuel-nav-container']} h-14`}>
+            <div className={`${styles['fuel-nav-container']}`}>
                 <div className={`${styles['fuel-menu-row']} bg-orange-600 top-0 right-0 left-0 flex flex-row`}>
-                <div className={`${styles['fuel-header-logo-container']} hidden flex flex-row pl-3 items-center text-4xl font-mono`}>
+                <div className={`${styles['fuel-header-logo-container']} hidden text-black flex flex-row pl-3 items-center text-4xl font-mono`}>
                     <span className="fuel-header-logo-fuel">Fuel</span>
                     <div className="fuel-header-logo-pm-container flex flex-col justify-center items-center">
                         <span className="fuel-header-logo-p text-sm leading-4">P</span>

@@ -1,7 +1,8 @@
 // Logic
 .fuel-menu-row {
     width: 100%;
-    min-height: 3.5rem;
+    // Set a static height for the scroll effect
+    height: 60px;
     box-sizing: border-box;
 }
 

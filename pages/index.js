@@ -148,9 +148,6 @@ export default function Home() {
       </div>
 
       <footer className="flex items-center justify-center w-full h-24 border-t flex-col">
-        <div className="netlify-container flex flex-row">
-          Hosted on{' '}<img src="/netlify.svg" alt="Netlify Logo" className="h-6 ml-2" />
-        </div>
         <div className="vercel-container">
           <a
             className="flex items-center justify-center"

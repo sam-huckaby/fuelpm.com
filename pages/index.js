@@ -6,8 +6,6 @@ import FloatingHeader from '../components/common/floatingHeader.component';
 
 import { smoothScroll } from '../utils/helpers';
 
-import styles from '../styles/Home.module.scss';
-
 export default function Home() {
   const [concept, setConcept] = useState(0);
 

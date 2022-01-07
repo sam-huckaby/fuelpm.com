@@ -2,17 +2,37 @@ import React, { useState, useRef } from "react";
 
 import AuthGuard from '../../../components/auth/authGuard.component';
 import FloatingHeader from '../../../components/common/floatingHeader.component';
+import { supabase } from "../../../utils/supabaseClient";
 
 export default function CreateProject() {
     // State values
     const [name, setName] = useState("");
-    const [deadline, setDeadline] = useState(new Date());
-    const [nonTerminals, setNonTerminals] = useState([]);
-    const [terminals, setTerminals] = useState([]);
+    const [deadline, setDeadline] = useState((new Date()).toISOString().split('T')[0]);
+    const [nonTerminalStates, setNonTerminalStates] = useState([
+        {
+            label: 'To Do',
+            color: '#CCCCCC',
+            terminal: false
+        },
+        {
+            label: 'In Progress',
+            color: '#00B9D1',
+            terminal: false
+        }
+    ]);
+    const [terminalStates, setTerminalStates] = useState([
+        {
+            label: 'Complete',
+            color: '#00A303',
+            terminal: true
+        }
+    ]);
 
     // References
-    const nonTerminalInput = useRef(null);
-    const terminalInput = useRef(null);
+    const nameInput = useRef('');
+    const deadlineInput = useRef(new Date());
+    const nonTerminalInput = useRef('');
+    const terminalInput = useRef('');
 
     function handleNonTerminalEnter(e) {
         if (e.key === 'Enter') {
@@ -22,12 +42,12 @@ export default function CreateProject() {
     
     function addNonTerminal() {
         // Add new status, but prevent duplicates
-        setNonTerminals([...nonTerminals.filter((cur) => (cur.label !== nonTerminalInput.current.value)), {label:nonTerminalInput.current.value, color:'#CCCCCC', terminal:false}]);
+        setNonTerminalStates([...nonTerminalStates.filter((cur) => (cur.label !== nonTerminalInput.current.value)), {label:nonTerminalInput.current.value, color:'#CCCCCC', terminal:false}]);
         nonTerminalInput.current.value = '';
     }
 
     function removeNonTerminal(label) {
-        setNonTerminals([...nonTerminals.filter((cur) => (cur.label !== label))]);
+        setNonTerminalStates([...nonTerminalStates.filter((cur) => (cur.label !== label))]);
     }
 
     function handleTerminalEnter(e) {
@@ -38,16 +58,63 @@ export default function CreateProject() {
 
     function addTerminal() {
         // Add new status, but prevent duplicates
-        setTerminals([...terminals.filter((cur) => (cur.label !== terminalInput.current.value)), {label:terminalInput.current.value, color:'#CCCCCC', terminal:true}]);
+        setTerminalStates([...terminalStates.filter((cur) => (cur.label !== terminalInput.current.value)), {label:terminalInput.current.value, color:'#CCCCCC', terminal:true}]);
         terminalInput.current.value = '';
     }
 
     function removeTerminal(label) {
-        setTerminals([...terminals.filter((cur) => (cur.label !== label))]);
+        setTerminalStates([...terminalStates.filter((cur) => (cur.label !== label))]);
     }
 
-    function save() {
-        console.log(name);
+    async function save() {
+        let user = await supabase.auth.user();
+
+        const { data, error } = await supabase
+            .from('project')
+            .insert([
+                {
+                    owner_id: user.id,
+                    name,
+                    deadline,
+                    nonTerminalStates,
+                    terminalStates,
+                }
+            ]);
+
+        if (error) throw error;
+
+        console.log(data);
+    }
+
+    function reset() {
+        // Set State back to defaults
+        setName("");
+        setDeadline(new Date());
+        setNonTerminalStates([
+            {
+                label: 'To Do',
+                color: '#CCCCCC',
+                terminal: false
+            },
+            {
+                label: 'In Progress',
+                color: '#00B9D1',
+                terminal: false
+            }
+        ]);
+        setTerminalStates([
+            {
+                label: 'Complete',
+                color: '#00A303',
+                terminal: true
+            }
+        ]);
+
+        // Set form back to defaults
+        nameInput.current.value = '';
+        deadlineInput.current.value = (new Date()).toISOString().split('T')[0];
+        nonTerminalInput.current.value = '';
+        terminalInput.current.value = '';
     }
 
     return (
@@ -59,6 +126,7 @@ export default function CreateProject() {
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_name">Name</label>
                     <input
+                        ref={nameInput}
                         onChange={e => setName(e.target.value)}
                         className="rounded border border-solid border-orange-600 bg-transparent h-8"
                         type="text"
@@ -68,6 +136,7 @@ export default function CreateProject() {
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_deadline">Deadline</label>
                     <input
+                        ref={deadlineInput}
                         onChange={e => setDeadline(e.target.value)}
                         className="rounded border border-solid border-orange-600 bg-transparent h-8"
                         type="date"
@@ -88,10 +157,10 @@ export default function CreateProject() {
                     <button onClick={() => addNonTerminal()} className="rounded bg-transparent border border-solid border-orange-600 w-8 h-8">&#43;</button>
                 </div>
                 <div className="fuel-chips-container flex flex-row flex-wrap justify-start items-center">
-                    {nonTerminals && (
+                    {nonTerminalStates && (
                         <>
                             {
-                                nonTerminals.map(item =>
+                                nonTerminalStates.map(item =>
                                     <div key={item.label} id={item.label+'_nonterminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-zinc-500 mr-4 mt-3">
                                         <input className="h-[25px] w-[20px] bg-transparent" type="color" defaultValue={item.color} />
                                         <label htmlFor={item.label+'_nonterminal_status'} className="text-white flex-auto flex flex-row justify-center items-center">{item.label}</label>
@@ -116,14 +185,14 @@ export default function CreateProject() {
                     <button onClick={() => addTerminal()} className="rounded bg-transparent border border-solid border-orange-600 w-8 h-8">&#43;</button>
                 </div>
                 <div className="fuel-chips-container flex flex-row flex-wrap justify-start items-center">
-                    {terminals && (
+                    {terminalStates && (
                         <>
                         {
-                            terminals.map(item =>
+                            terminalStates.map(item =>
                                 <div key={item.label} id={item.label+'_terminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-zinc-500 mr-4 mt-3">
                                     <input className="h-[25px] w-[20px] bg-transparent" type="color" defaultValue={item.color} />
                                     <label htmlFor={item.label+'_terminal_status'} className="text-white flex-auto">{item.label}</label>
-                                    <button onClick={() => removeTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center">X</button>
+                                    <button onClick={() => removeTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2">X</button>
                                 </div>
                             )
                         }
@@ -132,7 +201,7 @@ export default function CreateProject() {
                 </div>
             </div>
             <div className="dark:bg-zinc-700 p-2 flex flex-row items-center justify-between border-t border-solid border-orange-600">
-                <button className="text-xl p-2 border border-solid border-zinc-300 text-black dark:text-white rounded">Reset</button>
+                <button onClick={() => reset()} className="text-xl p-2 border border-solid border-zinc-300 text-black dark:text-white rounded">Reset</button>
                 <button onClick={() => save()} className="text-xl p-2 border border-solid border-orange-600 text-black dark:text-white rounded">Save</button>
             </div>
         </div>

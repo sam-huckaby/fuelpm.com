@@ -59,7 +59,7 @@ export default class LoginForm extends Component {
             return (
                 <div className="absolute top-0 right-0 bottom-0 left-0 bg-neutral-100 dark:bg-zinc-700 flex flex-col justify-center items-center">
                     {(!this.state.complete)? <div className="border-t-4 border-t-orange-600 border-b-4 border-b-orange-600 border-l-4 border-l-orange-600 border-r-4 border-r-white dark:border-r-zinc-700 border-solid w-6 h-6 animate-spin rounded-full">&nbsp;</div> : <div className="text-green-600 text-5xl">{'\u2713'}</div>}
-                    {(!this.state.complete)? <span className="mt-5">Logging In...</span> : <span className="mt-5">Done! Check your e-mail to login.</span>}
+                    {(!this.state.complete)? <span className="mt-5">Logging In...</span> : <div className="flex flex-col justify-center items-center"><span className="mt-5">Done! Check your e-mail to login.</span><span>(You can close this window)</span></div>}
                 </div>
             );
         }

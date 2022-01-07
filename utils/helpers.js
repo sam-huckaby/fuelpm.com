@@ -22,3 +22,13 @@ export function smoothScroll(target) {
     // start scrolling
     scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
 }
+
+export function validateObject(obj, requiredProps) {
+    let valid = true;
+    for (let i = 0; i < requiredProps.length; i++) {
+        if (!obj[requiredProps[i]]) {
+            valid = false;
+        }
+    }
+    return valid;
+}

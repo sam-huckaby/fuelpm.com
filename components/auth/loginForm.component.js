@@ -33,6 +33,12 @@ export default class LoginForm extends Component {
         });
     }
 
+    handleEnter(e) {
+        if (e.key === 'Enter') {
+            this.login();
+        }
+    }
+
     async login() {
         await this.setState({loggingIn: true});
 
@@ -72,13 +78,7 @@ export default class LoginForm extends Component {
                 </div>
                 <span className="text-lg font-bold text-center">Login</span>
                 <span className="text-sm text-zinc-400 font-bold text-center mb-4">(if you don't have an account, we will automatically create one for you)</span>
-                <input className="rounded bg-transparent w-full border-solid border-zinc-400 border p-2 mb-2 invalid:border-red-600" type="email" name="fuelEmail" onChange={(event) => this.handleInputChange(event)} placeholder="E-Mail" />
-                {/* <input className="rounded bg-transparent w-full border-solid border-zinc-400 border p-2 mb-2 invalid:border-red-600" id="password_field" name="fuelPassword" minLength="8" onChange={(event) => this.handleInputChange(event)} type={(this.state.showPass)? 'text' : 'password'} placeholder="Password" />
-                {(this.state.fuelPassword.length < 8 && this.state.fuelPassword.length > 0)? <span className="pl-2 -mt-2">^ must be 8 or more characters</span> : ''}
-                <div className="flex flex-row items-center mb-16">
-                    <input type="checkbox" id="show_pass_checkbox" onClick={() => this.setState({showPass: !this.state.showPass})} />
-                    <label htmlFor="show_pass_checkbox" className="text-zinc-400 pl-2">Show Password</label>
-                </div> */}
+                <input className="rounded bg-transparent w-full border-solid border-zinc-400 border p-2 mb-2 invalid:border-red-600" type="email" name="fuelEmail" onChange={(event) => this.handleInputChange(event)} onKeyPress={(e) => this.handleEnter(e)} placeholder="E-Mail" />
                 <button className="bg-orange-600 rounded p-2 text-white disabled:text-zinc-700 disabled:bg-zinc-700" disabled={this.state.loggingIn} onClick={() => this.login()}>Login</button>
             </div>
         );

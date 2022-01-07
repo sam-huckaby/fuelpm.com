@@ -157,6 +157,7 @@ export default class FloatingHeader extends Component {
                     {/* END logged-out buttons */}
                     {/* BEGIN logged-in buttons */}
                     <Link href="/app/dashboard"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Dashboard</button></Link>
+                    <Link href="/app/projects"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Projects</button></Link>
                     <Link href="/app/settings"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Settings</button></Link>
                     {/* END logged-in buttons */}
                     {/* Spacer to push the logout button to the bottom of the menu */}

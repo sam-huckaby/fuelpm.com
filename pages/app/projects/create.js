@@ -7,7 +7,7 @@ import { supabase } from "../../../utils/supabaseClient";
 export default function CreateProject() {
     // State values
     const [name, setName] = useState("");
-    const [deadline, setDeadline] = useState((new Date()).toISOString().split('T')[0]);
+    const [description, setDescription] = useState((new Date()).toISOString().split('T')[0]);
     const [nonTerminalStates, setNonTerminalStates] = useState([
         {
             label: 'To Do',
@@ -30,7 +30,7 @@ export default function CreateProject() {
 
     // References
     const nameInput = useRef('');
-    const deadlineInput = useRef(new Date());
+    const descriptionInput = useRef('');
     const nonTerminalInput = useRef('');
     const terminalInput = useRef('');
 
@@ -70,12 +70,12 @@ export default function CreateProject() {
         let user = await supabase.auth.user();
 
         const { data, error } = await supabase
-            .from('project')
+            .from('projects')
             .insert([
                 {
                     owner_id: user.id,
                     name,
-                    deadline,
+                    description,
                     nonTerminalStates,
                     terminalStates,
                 }
@@ -89,7 +89,7 @@ export default function CreateProject() {
     function reset() {
         // Set State back to defaults
         setName("");
-        setDeadline(new Date());
+        setDescription('');
         setNonTerminalStates([
             {
                 label: 'To Do',
@@ -112,7 +112,7 @@ export default function CreateProject() {
 
         // Set form back to defaults
         nameInput.current.value = '';
-        deadlineInput.current.value = (new Date()).toISOString().split('T')[0];
+        descriptionInput.current.value = (new Date()).toISOString().split('T')[0];
         nonTerminalInput.current.value = '';
         terminalInput.current.value = '';
     }
@@ -134,14 +134,13 @@ export default function CreateProject() {
                         id="project_name" />
                 </div>
                 <div className="flex flex-col pt-3">
-                    <label htmlFor="project_deadline">Deadline</label>
-                    <input
-                        ref={deadlineInput}
-                        onChange={e => setDeadline(e.target.value)}
+                    <label htmlFor="project_description">Description</label>
+                    <textarea 
+                        ref={descriptionInput}
+                        onChange={e => setDescription(e.target.value)}
                         className="rounded border border-solid border-orange-600 bg-transparent h-8"
-                        type="date"
-                        name="deadline"
-                        id="project_deadline" />
+                        name="description"
+                        id="project_description"></textarea>
                 </div>
                 <div className="flex flex-row items-end pt-3">
                     <div className="flex flex-col flex-auto">

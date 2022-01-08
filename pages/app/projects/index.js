@@ -1,9 +1,37 @@
 import Link from 'next/link';
 
+import { supabase } from "../../../utils/supabaseClient";
+import { supabaseCaptureSSRCookie } from '../../../utils/helpers';
+
 import AuthGuard from '../../../components/auth/authGuard.component';
 import FloatingHeader from '../../../components/common/floatingHeader.component';
 
-export default function AllProjects() {
+function AllProjects(props) {
+    
+    function renderProjects() {
+        if (props.projects.length < 1) {
+            return (
+                <div className="text-zinc-400 flex flex-row justify-center items-center p-5">You Have No Projects</div>
+            );
+        } else {
+            return (
+                <div className="flex flex-col">
+                    {
+                        props.projects &&
+                        props.projects.map(
+                            (cur) => 
+                                <Link key={cur.name} href={`/app/p/${encodeURIComponent(cur.name)}`}>
+                                    <div className="flex flex-col justify-center items-center p-4 dark:bg-white/20 mt-2">
+                                        <div className="text-lg">{cur.name}</div>
+                                    </div>
+                                </Link>
+                        )
+                    }
+                </div>
+            );
+        }
+    }
+
     return (
         <div className="flex flex-col min-h-screen">
             <AuthGuard></AuthGuard>
@@ -13,8 +41,29 @@ export default function AllProjects() {
                     <span className="text-3xl text-orange-600 font-mono">Projects</span>
                     <Link href="/app/projects/create"><button className="text-xl p-2 border border-solid border-orange-600 rounded">&#43;&nbsp;Create</button></Link>
                 </div>
-                <div className="text-zinc-400 flex flex-row justify-center items-center p-5">You Have No Projects</div>
+                {renderProjects()}
             </div>
         </div>
     );
 }
+
+export async function getServerSideProps({ req }) {
+    // This code is run on the server, so it does not have access to the browser memory session
+    // In order to get anything back, we need to scrape the user's JWT and apply it to this call
+    supabase.auth.session = supabaseCaptureSSRCookie(req);
+
+    // Grab all the projects
+    let { data: projects, error } = await supabase
+        .from('projects')
+        .select('*');
+
+    if (error) throw error;
+
+    return {
+        props: {
+            projects
+        },
+    }
+}  
+
+export default AllProjects;

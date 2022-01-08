@@ -32,3 +32,10 @@ export function validateObject(obj, requiredProps) {
     }
     return valid;
 }
+
+// Making requests to supabase in SSR requires this, but I'm hopeful that one day they will fix this
+export function supabaseCaptureSSRCookie (req) {
+    return () => ({
+        access_token: req.cookies['sb:token']
+    })
+}

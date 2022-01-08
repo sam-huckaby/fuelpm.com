@@ -23,10 +23,19 @@ export default class AuthGuard extends Component {
         });
 
         // Keep track of the user's session, and if it ends, redirect the user dynamically
-        const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             if (!session) {
                 // Seems like the below code will preseve the route so I can redirect after login...
                 Router.push('/login', Router.pathname);
+            } else {
+                // Send session to /api/auth route to set the auth cookie.
+                // NOTE: this is only needed if you're doing SSR (getServerSideProps)!
+                fetch('/api/auth', {
+                    method: 'POST',
+                    headers: new Headers({ 'Content-Type': 'application/json' }),
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ event, session }),
+                }).then((res) => res.json());
             }
         });
         await this.setState({

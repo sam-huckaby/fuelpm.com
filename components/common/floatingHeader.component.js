@@ -113,7 +113,7 @@ export default class FloatingHeader extends Component {
 
         if (typeof window !== 'undefined') {
             if (error) {
-                window.alert('Logout failed. You may want to clear your cache.');
+                // Fail silently, because it likely means that they weren't authenticated to begin with
             } else {
                 // Route the user back to login, so they know things worked
                 Router.push('/login');

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/router';
 
 import { supabase } from "../../../utils/supabaseClient";
@@ -14,26 +14,17 @@ export default function CreateTask(props) {
     // State values
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [state, setState] = useState(null);
+    const [state, setState] = useState(props.availableStates[0].id);
 
     // References
     const nameInput = useRef('');
     const descriptionInput = useRef('');
-    const stateSelect = useRef('');
 
-    function handleNonTerminalEnter(e) {
-        if (e.key === 'Enter') {
-            addNonTerminal();
-        }
-    }
+    // useEffect(() => {
+    //     setState(props.availableStates[0].id);
+    // });
 
     async function save() {
-        console.log({
-            name,
-            description,
-            state
-        });
-
         const { data, error } = await supabase
             .from('tasks')
             .insert([
@@ -57,8 +48,7 @@ export default function CreateTask(props) {
         // Set form back to defaults
         nameInput.current.value = '';
         descriptionInput.current.value = '';
-        nonTerminalInput.current.value = '';
-        terminalInput.current.value = '';
+        setState(props.availableStates[0].id);
     }
 
     return (
@@ -92,10 +82,11 @@ export default function CreateTask(props) {
                         <label htmlFor="project_name">Starting State</label>
                         <select
                             onChange={e => setState(e.target.value)}
+                            defaultValue={props.availableStates[0].id}
                             className="rounded border border-solid border-orange-600 bg-transparent h-8">
                             {
                                 props.availableStates &&
-                                props.availableStates.map((cur) => 
+                                props.availableStates.map((cur, index) => 
                                     <option key={cur.label+'_'+cur.terminal} value={cur.id}>{cur.label}</option>
                                 )
                             }

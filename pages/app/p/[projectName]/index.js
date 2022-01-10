@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-import { supabase } from "../../../utils/supabaseClient";
-import { supabaseCaptureSSRCookie } from '../../../utils/helpers';
+import { supabase } from "../../../../utils/supabaseClient";
+import { supabaseCaptureSSRCookie } from '../../../../utils/helpers';
 
-import AuthGuard from '../../../components/auth/authGuard.component';
-import FloatingHeader from '../../../components/common/floatingHeader.component';
+import AuthGuard from '../../../../components/auth/authGuard.component';
+import FloatingHeader from '../../../../components/common/floatingHeader.component';
 
 export default function Project(props) {
     // TODO: Consider the implications of there being two projects with the same name
@@ -13,12 +14,6 @@ export default function Project(props) {
     const router = useRouter();
 
     function addTask() {
-        // router.push('/app/tasks/create', undefined, {
-        //     query: {
-        //         project_id: props.projects[0].id,
-        //     }
-        // });
-
         router.push({
             pathname: '/app/tasks/create',
             query: {
@@ -32,14 +27,19 @@ export default function Project(props) {
             return (
                 <>
                     {props.projects[0].tasks.map((cur) => 
-                        <div key={cur.name} className="flex flex-row justify-start items-center">
-                            {cur.name}
-                        </div>
+                        <Link href={`/app/p/${props.projects[0].name}/t/${cur.name}`}>
+                            <div key={cur.name} className="flex flex-col py-4 px-2 mb-2 hover:bg-zinc-400/25 active:bg-zinc-400/25 border-zinc-300 border-solid border">
+                                <div className="flex flex-row justify-between items-center">
+                                    <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
+                                    <span style={{backgroundColor: cur.states.color}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
+                                </div>
+                                <span className="text-zinc-600 pt-2 border-t border-solid border-zinc-600">{cur.description}</span>
+                            </div>
+                        </Link>
                     )}
                 </>
             );
         } else {
-            // Wire in tasks when they... uh... exist
             return (
                 <div className="text-zinc-400/60 flex flex-row justify-center items-center">No Tasks Yet</div>
             );
@@ -57,7 +57,7 @@ export default function Project(props) {
                 </div>
                 {/* Swap in for a description */}
                 <div className="text-sm">{props.projects[0].description}</div>
-                <div className="flex flex-row justify-between mt-5 pb-2 border-b border-solid border-black">
+                <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold border-b border-solid border-black">
                     <span className="text-lg">Tasks</span>
                     <button onClick={() => addTask()} className="p-2 border-solid border border-zinc-400 rounded">+ Add</button>
                 </div>
@@ -77,7 +77,7 @@ export async function getServerSideProps({ req, params }) {
     // Grab all the projects
     let { data: projects, error } = await supabase
         .from('projects')
-        .select('*, tasks(*)')
+        .select('*, tasks(*, states(*))')
         .eq('name', params.projectName);
 
     if (error) throw error;

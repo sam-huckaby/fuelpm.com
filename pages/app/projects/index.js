@@ -51,12 +51,12 @@ export async function getServerSideProps({ req }) {
     // This code is run on the server, so it does not have access to the browser memory session
     // In order to get anything back, we need to scrape the user's JWT and apply it to this call
     supabase.auth.session = supabaseCaptureSSRCookie(req);
-
+    
     // Grab all the projects
     let { data: projects, error } = await supabase
         .from('projects')
         .select('*');
-
+        
     if (error) throw error;
 
     return {

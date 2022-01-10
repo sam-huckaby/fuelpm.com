@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { supabase } from "../../../utils/supabaseClient";
 import { supabaseCaptureSSRCookie } from '../../../utils/helpers';
 
@@ -8,12 +10,40 @@ export default function Project(props) {
     // TODO: Consider the implications of there being two projects with the same name
     // Should the DB prevent duplicate names within the same account? - Yes (Sam, January 8th, 2022) [Added Unique constraint on `projects`]
     // Should there be a different page for projects that don't belong to the current user?
+    const router = useRouter();
+
+    function addTask() {
+        // router.push('/app/tasks/create', undefined, {
+        //     query: {
+        //         project_id: props.projects[0].id,
+        //     }
+        // });
+
+        router.push({
+            pathname: '/app/tasks/create',
+            query: {
+                project_id: props.projects[0].id,
+            },
+        });
+    }
 
     function renderTasks() {
-        // Wire in tasks when they... uh... exist
-        return (
-            <div className="text-zinc-400/60 flex flex-row justify-center items-center">No Tasks Yet</div>
-        );
+        if (props.projects[0].tasks && props.projects[0].tasks.length) {
+            return (
+                <>
+                    {props.projects[0].tasks.map((cur) => 
+                        <div key={cur.name} className="flex flex-row justify-start items-center">
+                            {cur.name}
+                        </div>
+                    )}
+                </>
+            );
+        } else {
+            // Wire in tasks when they... uh... exist
+            return (
+                <div className="text-zinc-400/60 flex flex-row justify-center items-center">No Tasks Yet</div>
+            );
+        }
     }
 
     return (
@@ -27,9 +57,9 @@ export default function Project(props) {
                 </div>
                 {/* Swap in for a description */}
                 <div className="text-sm">{props.projects[0].description}</div>
-                <div className="flex flex-row justify-between mt-5">
+                <div className="flex flex-row justify-between mt-5 pb-2 border-b border-solid border-black">
                     <span className="text-lg">Tasks</span>
-                    <button className="p-2 border-solid border border-zinc-400 rounded">+ Add</button>
+                    <button onClick={() => addTask()} className="p-2 border-solid border border-zinc-400 rounded">+ Add</button>
                 </div>
                 <div className="flex flex-col">
                     {renderTasks()}
@@ -47,7 +77,7 @@ export async function getServerSideProps({ req, params }) {
     // Grab all the projects
     let { data: projects, error } = await supabase
         .from('projects')
-        .select('*')
+        .select('*, tasks(*)')
         .eq('name', params.projectName);
 
     if (error) throw error;

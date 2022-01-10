@@ -1,13 +1,17 @@
 import React, { useState, useRef } from "react";
+import { useRouter } from 'next/router';
 
 import AuthGuard from '../../../components/auth/authGuard.component';
 import FloatingHeader from '../../../components/common/floatingHeader.component';
 import { supabase } from "../../../utils/supabaseClient";
 
 export default function CreateProject() {
+    // The router to move the user to the newly created project's detail page
+    const router = useRouter();
+
     // State values
     const [name, setName] = useState("");
-    const [description, setDescription] = useState((new Date()).toISOString().split('T')[0]);
+    const [description, setDescription] = useState('');
     const [nonTerminalStates, setNonTerminalStates] = useState([
         {
             label: 'To Do',
@@ -69,21 +73,42 @@ export default function CreateProject() {
     async function save() {
         let user = await supabase.auth.user();
 
-        const { data, error } = await supabase
+        const createdProject = await supabase
             .from('projects')
             .insert([
                 {
                     owner_id: user.id,
                     name,
                     description,
-                    nonTerminalStates,
-                    terminalStates,
                 }
             ]);
 
-        if (error) throw error;
+        if (createdProject.error) throw createdProject.error;
 
-        console.log(data);
+        // Create the member entry manually, since the alpha-testing triggers/functions aren't quite working.
+        const createdMembers = await supabase
+            .from('members')
+            .insert([
+                {
+                    member_id: user.id,
+                    project_id: createdProject.data[0].id,
+                }
+            ]);
+
+        if (createdMembers.error) throw createdMembers.error;
+
+        // Call supabase to add all of these states
+        const createdStates = await supabase
+            .from('states')
+            .insert([
+                ...nonTerminalStates.map((cur) => ({...cur, project_id: createdProject.data[0].id})),
+                ...terminalStates.map((cur) => ({...cur, project_id: createdProject.data[0].id})),
+            ]);
+
+        if (createdStates.error) throw createdStates.error;
+
+        // Send the user on to the detail page of their new project
+        router.push(`/app/p/${createdProject.data[0].name}`);
     }
 
     function reset() {
@@ -112,7 +137,7 @@ export default function CreateProject() {
 
         // Set form back to defaults
         nameInput.current.value = '';
-        descriptionInput.current.value = (new Date()).toISOString().split('T')[0];
+        descriptionInput.current.value = '';
         nonTerminalInput.current.value = '';
         terminalInput.current.value = '';
     }

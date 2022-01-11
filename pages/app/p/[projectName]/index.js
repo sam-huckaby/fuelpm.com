@@ -22,18 +22,26 @@ export default function Project(props) {
         });
     }
 
+    function colorChoice(hexString) {
+        let noHash = hexString.substring(1);
+        let result = parseInt(noHash, 16);
+
+        // Max Hex value is 16777215, so use "about" 1/8th as the mark to swap to white text
+        return (result < 40000)? 'white' : 'black';
+    }
+
     function renderTasks() {
         if (props.projects[0].tasks && props.projects[0].tasks.length) {
             return (
                 <>
                     {props.projects[0].tasks.map((cur) => 
-                        <Link href={`/app/p/${props.projects[0].name}/t/${cur.name}`}>
-                            <div key={cur.name} className="flex flex-col py-4 px-2 mb-2 hover:bg-zinc-400/25 active:bg-zinc-400/25 border-zinc-300 border-solid border">
+                        <Link key={cur.name} href={`/app/p/${props.projects[0].name}/t/${cur.name}`}>
+                            <div className="flex flex-col py-4 px-2 mb-2 hover:bg-zinc-400/25 active:bg-zinc-400/25 border-zinc-300 border-solid border">
                                 <div className="flex flex-row justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
-                                    <span style={{backgroundColor: cur.states.color}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
+                                    <span style={{backgroundColor: cur.states.color, color: colorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
-                                <span className="text-zinc-600 pt-2 border-t border-solid border-zinc-600">{cur.description}</span>
+                                <span className="text-zinc-600 dark:text-zinc-300 pt-2 border-t border-solid border-zinc-600 dark:border-zinc-300">{cur.description}</span>
                             </div>
                         </Link>
                     )}
@@ -57,7 +65,7 @@ export default function Project(props) {
                 </div>
                 {/* Swap in for a description */}
                 <div className="text-sm">{props.projects[0].description}</div>
-                <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold border-b border-solid border-black">
+                <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                     <span className="text-lg">Tasks</span>
                     <button onClick={() => addTask()} className="p-2 border-solid border border-zinc-400 rounded">+ Add</button>
                 </div>

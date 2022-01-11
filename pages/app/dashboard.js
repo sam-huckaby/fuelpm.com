@@ -6,7 +6,7 @@ export default function Dashboard() {
         <div className="flex flex-col min-h-screen">
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
-            <div className="flex-auto dark:bg-zinc-700 text-white flex flex-col p-2">
+            <div className="flex-auto flex flex-col p-2">
                 <div className="text-3xl text-orange-600 font-mono">DASHBOARD</div>
             </div>
         </div>

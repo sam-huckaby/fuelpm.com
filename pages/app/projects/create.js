@@ -146,7 +146,7 @@ export default function CreateProject() {
         <div className="flex flex-col min-h-screen">
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
-            <div className="flex-auto dark:bg-zinc-700 dark:text-white flex flex-col p-2">
+            <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2">
                 <div className="text-2xl font-mono flex flex-row items-center pb-2 border-b border-solid border-orange-600">Project Details:</div>
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_name">Name</label>
@@ -185,7 +185,7 @@ export default function CreateProject() {
                         <>
                             {
                                 nonTerminalStates.map(item =>
-                                    <div key={item.label} id={item.label+'_nonterminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-zinc-500 mr-4 mt-3">
+                                    <div key={item.label} id={item.label+'_nonterminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-stone-500 mr-4 mt-3">
                                         <input className="h-[25px] w-[20px] bg-transparent" type="color" defaultValue={item.color} />
                                         <label htmlFor={item.label+'_nonterminal_status'} className="text-white flex-auto flex flex-row justify-center items-center">{item.label}</label>
                                         <button onClick={() => removeNonTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2">X</button>
@@ -213,7 +213,7 @@ export default function CreateProject() {
                         <>
                         {
                             terminalStates.map(item =>
-                                <div key={item.label} id={item.label+'_terminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-zinc-500 mr-4 mt-3">
+                                <div key={item.label} id={item.label+'_terminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-stone-500 mr-4 mt-3">
                                     <input className="h-[25px] w-[20px] bg-transparent" type="color" defaultValue={item.color} />
                                     <label htmlFor={item.label+'_terminal_status'} className="text-white flex-auto">{item.label}</label>
                                     <button onClick={() => removeTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2">X</button>
@@ -224,8 +224,8 @@ export default function CreateProject() {
                     )}
                 </div>
             </div>
-            <div className="dark:bg-zinc-700 p-2 flex flex-row items-center justify-between border-t border-solid border-orange-600">
-                <button onClick={() => reset()} className="text-xl p-2 border border-solid border-zinc-300 text-black dark:text-white rounded">Reset</button>
+            <div className="dark:bg-stone-700 p-2 flex flex-row items-center justify-between border-t border-solid border-orange-600">
+                <button onClick={() => reset()} className="text-xl p-2 border border-solid border-stone-300 text-black dark:text-white rounded">Reset</button>
                 <button onClick={() => save()} className="text-xl p-2 border border-solid border-orange-600 text-black dark:text-white rounded">Save</button>
             </div>
         </div>

@@ -20,10 +20,6 @@ export default function CreateTask(props) {
     const nameInput = useRef('');
     const descriptionInput = useRef('');
 
-    // useEffect(() => {
-    //     setState(props.availableStates[0].id);
-    // });
-
     async function save() {
         const { data, error } = await supabase
             .from('tasks')
@@ -55,7 +51,7 @@ export default function CreateTask(props) {
         <div className="flex flex-col min-h-screen">
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
-            <div className="flex-auto dark:bg-zinc-700 dark:text-white flex flex-col p-2">
+            <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2">
                 <div className="text-2xl font-mono flex flex-row items-center pb-2 border-b border-solid border-orange-600">Task Details:</div>
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_name">Name</label>
@@ -94,8 +90,8 @@ export default function CreateTask(props) {
                     </div>
                 </div>
             </div>
-            <div className="dark:bg-zinc-700 p-2 flex flex-row items-center justify-between border-t border-solid border-orange-600">
-                <button onClick={() => reset()} className="text-xl p-2 border border-solid border-zinc-300 text-black dark:text-white rounded">Reset</button>
+            <div className="dark:bg-stone-700 p-2 flex flex-row items-center justify-between border-t border-solid border-orange-600">
+                <button onClick={() => reset()} className="text-xl p-2 border border-solid border-stone-300 text-black dark:text-white rounded">Reset</button>
                 <button onClick={() => save()} className="text-xl p-2 border border-solid border-orange-600 text-black dark:text-white rounded">Save</button>
             </div>
         </div>

@@ -26,7 +26,7 @@ export default class AuthGuard extends Component {
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             if (!session) {
                 // Seems like the below code will preseve the route so I can redirect after login...
-                Router.push('/login', Router.pathname);
+                Router.push('/login', Router.asPath);
             } else {
                 // Send session to /api/auth route to set the auth cookie.
                 // NOTE: this is only needed if you're doing SSR (getServerSideProps)!
@@ -44,7 +44,7 @@ export default class AuthGuard extends Component {
 
         if (!this.state.session) {
             // Seems like the below code will preseve the route so I can redirect after login...
-            Router.push('/login', Router.pathname);
+            Router.push('/login', Router.asPath);
         }
 
         // For the peculuar case where a user tries to go to the login page when they are already logged in

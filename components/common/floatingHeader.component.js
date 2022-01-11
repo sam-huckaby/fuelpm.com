@@ -108,27 +108,15 @@ export default class FloatingHeader extends Component {
         }
     }
 
-    async logout() {
-        let { error } = await supabase.auth.signOut();
-
-        if (typeof window !== 'undefined') {
-            if (error) {
-                // Fail silently, because it likely means that they weren't authenticated to begin with
-            } else {
-                // Route the user back to login, so they know things worked
-                Router.push('/login');
-            }
-        }
-    }
-
     renderLogoutButton() {
         if (this.state.loggedIn) {
             return (
-                <button
-                    onClick={() => this.logout()}
-                    className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-t`}>
-                    Sign Out
-                </button>
+                <Link href="/logout">
+                    <button
+                        className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-t`}>
+                        Sign Out
+                    </button>
+                </Link>
             );
         }
     }
@@ -147,7 +135,7 @@ export default class FloatingHeader extends Component {
                     <div className="flex-auto">&nbsp;</div>
                     <button onClick={() => this.toggleMenu()} className="bg-transparent active:bg-white/30 text-white h-14 w-14 text-3xl flex flex-row justify-center items-center">&equiv;</button>
                 </div>
-                <div className={((this.state.menuOpen)? 'translate-x-0' : 'translate-x-full') + ` ${styles['fuel-index-menu']} w-screen md:max-w-sm fixed shadow-lg transform right-0 bg-orange-600 fixed overflow-auto ease-in-out transition-all duration-300 z-20 border-t border-solid border-zinc-700 flex flex-col`}>
+                <div className={((this.state.menuOpen)? 'translate-x-0' : 'translate-x-full') + ` ${styles['fuel-index-menu']} w-screen md:max-w-sm fixed shadow-lg transform right-0 bg-orange-600 fixed overflow-auto ease-in-out transition-all duration-300 z-20 border-t border-solid border-stone-700 flex flex-col`}>
                     {/* BEGIN logged-out buttons */}
                     <button onClick={() => this.buttonJump('features')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Features</button>
                     <button onClick={() => this.buttonJump('pricing')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Pricing</button>

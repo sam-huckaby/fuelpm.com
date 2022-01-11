@@ -31,17 +31,17 @@ export default function Project(props) {
     }
 
     function renderTasks() {
-        if (props.projects[0].tasks && props.projects[0].tasks.length) {
+        if (props?.projects[0]?.tasks && props?.projects[0]?.tasks.length) {
             return (
                 <>
-                    {props.projects[0].tasks.map((cur) => 
-                        <Link key={cur.name} href={`/app/p/${props.projects[0].name}/t/${cur.name}`}>
-                            <div className="flex flex-col py-4 px-2 mb-2 hover:bg-zinc-400/25 active:bg-zinc-400/25 border-zinc-300 border-solid border">
+                    {props?.projects[0]?.tasks.map((cur) => 
+                        <Link key={cur.name} href={`/app/p/${props?.projects[0]?.name}/t/${cur.name}`}>
+                            <div className="flex flex-col py-4 px-2 mb-2 hover:bg-stone-400/25 active:bg-stone-400/25 border-stone-300 border-solid border">
                                 <div className="flex flex-row justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
                                     <span style={{backgroundColor: cur.states.color, color: colorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
-                                <span className="text-zinc-600 dark:text-zinc-300 pt-2 border-t border-solid border-zinc-600 dark:border-zinc-300">{cur.description}</span>
+                                <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300">{cur.description}</span>
                             </div>
                         </Link>
                     )}
@@ -49,7 +49,7 @@ export default function Project(props) {
             );
         } else {
             return (
-                <div className="text-zinc-400/60 flex flex-row justify-center items-center">No Tasks Yet</div>
+                <div className="text-stone-400/60 flex flex-row justify-center items-center">No Tasks Yet</div>
             );
         }
     }
@@ -60,14 +60,14 @@ export default function Project(props) {
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-3">
                 <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
-                    <div className="text-3xl">{props.projects[0].name}</div>
-                    <button className="p-2 border-solid border border-zinc-400 rounded">Edit</button>
+                    <div className="text-3xl">{props?.projects[0]?.name}</div>
+                    <button className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                 </div>
                 {/* Swap in for a description */}
-                <div className="text-sm">{props.projects[0].description}</div>
+                <div className="text-sm">{props?.projects[0]?.description}</div>
                 <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                     <span className="text-lg">Tasks</span>
-                    <button onClick={() => addTask()} className="p-2 border-solid border border-zinc-400 rounded">+ Add</button>
+                    <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
                 </div>
                 <div className="flex flex-col">
                     {renderTasks()}
@@ -78,21 +78,29 @@ export default function Project(props) {
 }
 
 export async function getServerSideProps({ req, params }) {
-    // This code is run on the server, so it does not have access to the browser memory session
-    // In order to get anything back, we need to scrape the user's JWT and apply it to this call
-    supabase.auth.session = supabaseCaptureSSRCookie(req);
+    if (params?.projectName) {
+        // This code is run on the server, so it does not have access to the browser memory session
+        // In order to get anything back, we need to scrape the user's JWT and apply it to this call
+        supabase.auth.session = supabaseCaptureSSRCookie(req);
 
-    // Grab all the projects
-    let { data: projects, error } = await supabase
-        .from('projects')
-        .select('*, tasks(*, states(*))')
-        .eq('name', params.projectName);
+        // Grab all the projects
+        let { data: projects, error } = await supabase
+            .from('projects')
+            .select('*, tasks(*, states(*))')
+            .eq('name', params.projectName);
 
-    if (error) throw error;
+        if (error) throw error;
 
-    return {
-        props: {
-            projects
-        },
+        return {
+            props: {
+                projects
+            },
+        }
+    } else {
+        return {
+            props: {
+                projects: []
+            }
+        }
     }
 }  

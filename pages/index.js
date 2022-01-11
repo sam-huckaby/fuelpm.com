@@ -119,10 +119,10 @@ export default function Home() {
           </div>
           <span className="text-black">Keep your projects running on full.</span>
         </div>
-        <div id="concept_bar" className="fuel-concept-bar bg-zinc-700 flex flex-row">
-          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Simple</button>
-          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-zinc-800 border-r`}>Shareable</button>
-          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Trackable</button>
+        <div id="concept_bar" className="fuel-concept-bar bg-stone-700 flex flex-row">
+          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Simple</button>
+          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-stone-800 border-r`}>Shareable</button>
+          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Trackable</button>
         </div>
       </div>
 
@@ -137,17 +137,17 @@ export default function Home() {
           <div className={`fuel-free-grid-label p-2 text-green-600 font-bold`}>Free</div>
           <div className={`fuel-no-limits-grid-label p-2 text-orange-600 font-bold`}>No Limits</div>
 
-          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-zinc-300`}>Monthly Cost</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-zinc-300`}>$0 (forever)</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-zinc-300`}>$5 / member</div>
+          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Monthly Cost</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>$0 (forever)</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>$5 / member</div>
 
-          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-zinc-300`}>Projects</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-zinc-300`}>5</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-zinc-300`}>No Limit</div>
+          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Projects</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>5</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div>
 
-          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-zinc-300`}>Members</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-zinc-300`}>5</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-zinc-300`}>No Limit</div>
+          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Members</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>5</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div>
         </div>
       </div>
 

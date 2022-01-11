@@ -16,7 +16,7 @@ export default function Project(props) {
             <div className="flex-auto flex flex-col p-3">
                 <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
                     <div className="text-3xl">{props.tasks[0].name}</div>
-                    <button className="p-2 border-solid border border-zinc-400 rounded">Edit</button>
+                    <button className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                 </div>
                 {/* Swap in for a description */}
                 <div className="text-sm">{props.tasks[0].description}</div>

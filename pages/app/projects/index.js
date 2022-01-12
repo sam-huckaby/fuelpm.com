@@ -21,7 +21,10 @@ function AllProjects(props) {
                         props.projects.map(
                             (cur) => 
                                 <Link key={cur.name} href={`/app/p/${encodeURIComponent(cur.name)}`}>
-                                    <div className="flex flex-col justify-center items-center p-4 dark:bg-white/20 mt-2">
+                                    <div className="flex flex-col justify-center items-center
+                                                    p-4 mt-2
+                                                    bg-stone-700/20 hover:bg-stone-700/10 active:bg-white
+                                                    dark:bg-white/20 hover:dark:bg-white/10 active:dark:bg-stone-700">
                                         <div className="text-lg">{cur.name}</div>
                                     </div>
                                 </Link>
@@ -36,7 +39,7 @@ function AllProjects(props) {
         <div className="flex flex-col min-h-screen">
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
-            <div className="flex-auto dark:bg-stone-700 text-white flex flex-col p-2">
+            <div className="flex-auto flex flex-col p-2">
                 <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-orange-600">
                     <span className="text-3xl text-orange-600 font-mono">Projects</span>
                     <Link href="/app/projects/create"><button className="text-xl p-2 border border-solid border-orange-600 rounded">&#43;&nbsp;Create</button></Link>

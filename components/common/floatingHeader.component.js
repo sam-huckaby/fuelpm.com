@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { supabase } from '../../utils/supabaseClient';
 import { smoothScroll } from '../../utils/helpers';
@@ -113,7 +114,7 @@ export default class FloatingHeader extends Component {
             return (
                 <Link href="/logout">
                     <button
-                        className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-t`}>
+                        className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-t border-b-0 border-r-0 border-l-0 rounded-none`}>
                         Sign Out
                     </button>
                 </Link>
@@ -126,27 +127,23 @@ export default class FloatingHeader extends Component {
             <div className={`${styles['fuel-nav-container']} h-[60px]`}>
                 <div className={`${styles['fuel-menu-row']} bg-orange-600 top-0 right-0 left-0 h-[60px] w-full box-border flex flex-row items-center`}> 
                     <div className={((this.props.noTopbranding)? 'hidden' : '') + ` ${styles['fuel-header-logo-container']} text-black flex flex-row pl-3 items-center text-4xl font-mono`}>
-                        <span className="fuel-header-logo-fuel">Fuel</span>
-                        <div className="fuel-header-logo-pm-container flex flex-col justify-center items-center">
-                            <span className="fuel-header-logo-p text-sm leading-4">P</span>
-                            <span className="fuel-header-logo-m text-sm leading-4">M</span>
-                        </div>
+                        <Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={100} height={60}/>
                     </div> 
                     <div className="flex-auto">&nbsp;</div>
-                    <button onClick={() => this.toggleMenu()} className="bg-transparent active:bg-white/30 text-white h-14 w-14 text-3xl flex flex-row justify-center items-center">&equiv;</button>
+                    <button onClick={() => this.toggleMenu()} className="bg-transparent active:bg-white/30 text-white h-14 w-14 text-3xl flex flex-row justify-center items-center border-none">&equiv;</button>
                 </div>
                 <div className={((this.state.menuOpen)? 'translate-x-0' : 'translate-x-full') + ` ${styles['fuel-index-menu']} w-screen md:max-w-sm fixed shadow-lg transform right-0 top-[60px] bg-orange-600 overflow-auto ease-in-out transition-all duration-300 z-20 border-t border-solid border-stone-700 flex flex-col`}>
                     {/* BEGIN logged-out buttons */}
-                    <button onClick={() => this.buttonJump('features')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Features</button>
-                    <button onClick={() => this.buttonJump('pricing')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Pricing</button>
+                    <button onClick={() => this.buttonJump('features')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Features</button>
+                    <button onClick={() => this.buttonJump('pricing')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Pricing</button>
                     {/* Uncomment this when there are some questions to be answered */}
                     {/* <button onClick={() => buttonJump('faqs')} className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>FAQs</button> */}
-                    <Link href="/login"><button className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Get Started / Login</button></Link>
+                    <Link href="/login"><button className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Get Started / Login</button></Link>
                     {/* END logged-out buttons */}
                     {/* BEGIN logged-in buttons */}
-                    <Link href="/app/dashboard"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Dashboard</button></Link>
-                    <Link href="/app/projects"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Projects</button></Link>
-                    <Link href="/app/settings"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Settings</button></Link>
+                    <Link href="/app/dashboard"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Dashboard</button></Link>
+                    <Link href="/app/projects"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Projects</button></Link>
+                    <Link href="/app/settings"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Settings</button></Link>
                     {/* END logged-in buttons */}
                     {/* Spacer to push the logout button to the bottom of the menu */}
                     <div className="flex-auto">&nbsp;</div>

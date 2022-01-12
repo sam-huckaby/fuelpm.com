@@ -104,25 +104,21 @@ export default function Home() {
           property="og:description"
           content="FuelPM is a linear, easy to use project management software designed to be touched as little as possible."
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Fuel-Favicon.svg" />
       </Head>
 
       <div className="fuel-bigscreen-container h-screen w-screen flex flex-col bg-orange-600">
         <FloatingHeader noTopbranding="true"></FloatingHeader>
         <div className="fuel-bigscreen flex-auto flex flex-col justify-center items-center">
-          <div className="fuel-logo-container text-black flex flex-row text-7xl font-mono">
-            <span className="fuel-logo-fuel">Fuel</span>
-            <div className="fuel-logo-pm-container flex flex-col justify-center items-center">
-              <span className="fuel-logo-p text-3xl leading-8">P</span>
-              <span className="fuel-logo-m text-3xl leading-8">M</span>
-            </div>
+          <div className="w-screen flex flex-row justify-center items-center">
+            <Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={380} height={250}/>
           </div>
           <span className="text-black">Keep your projects running on full.</span>
         </div>
         <div id="concept_bar" className="fuel-concept-bar bg-stone-700 flex flex-row">
-          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Simple</button>
-          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-stone-800 border-r`}>Shareable</button>
-          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Trackable</button>
+          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Simple</button>
+          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-stone-800 border-r border-t-0 border-b-0 rounded-none`}>Shareable</button>
+          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Trackable</button>
         </div>
       </div>
 

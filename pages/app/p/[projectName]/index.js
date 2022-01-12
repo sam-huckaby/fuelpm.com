@@ -29,7 +29,9 @@ export default function Project(props) {
                 <>
                     {props?.projects[0]?.tasks.map((cur) => 
                         <Link key={cur.name} href={`/app/p/${props?.projects[0]?.name}/t/${cur.name}`}>
-                            <div className="flex flex-col py-4 px-2 mb-2 hover:bg-stone-400/25 active:bg-stone-400/25 border-stone-300 border-solid border">
+                            <div className="flex flex-col py-4 px-2 mb-2 border-stone-400 border-solid border
+                                bg-stone-700/20 hover:bg-stone-700/10 active:bg-white
+                                dark:bg-white/20 hover:dark:bg-white/10 active:dark:bg-stone-700">
                                 <div className="flex flex-row justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
                                     <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>

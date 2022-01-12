@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import FloatingHeader from '../components/common/floatingHeader.component';
-
-import { smoothScroll } from '../utils/helpers';
 
 export default function Home() {
   const [concept, setConcept] = useState(0);
 
-  function toggleConcept(index) {
+  async function toggleConcept(index) {
+    const smoothScroll = (await import('../utils/helpers')).smoothScroll;
     setConcept(index);
     smoothScroll(document.getElementById('concept_bar'));
   }
@@ -134,21 +134,29 @@ export default function Home() {
         <div className={`text-3xl w-100`}>Pricing</div>
         <div className={`grid grid-cols-3`}>
           <div></div>
-          <div className={`fuel-free-grid-label p-2 text-green-600 font-bold`}>Free</div>
-          <div className={`fuel-no-limits-grid-label p-2 text-orange-600 font-bold`}>No Limits</div>
+          <div className={`fuel-free-grid-label p-2 text-green-600 font-bold`}>Free Tier</div>
+          {/* <div className={`fuel-no-limits-grid-label p-2 text-orange-600 font-bold`}>No Limits</div> */}
+          <div></div>
 
           <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Monthly Cost</div>
           <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>$0 (forever)</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>$5 / member</div>
+          {/* <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>$5 / member</div> */}
+          <div></div>
 
           <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Projects</div>
           <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>5</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div>
+          {/* <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div> */}
+          <div></div>
 
           <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Members</div>
           <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>5</div>
-          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div>
+          {/* <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div> */}
+          <div></div>
         </div>
+      </div>
+
+      <div className="pb-5 underline">
+        Unlimited Accounts Available In The Future.
       </div>
 
 {/* Uncomment this when there are some questions to be answered */}
@@ -173,7 +181,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             Powered by{' '}
-            <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} className="h-4 ml-2" />
           </a>
         </div>
         <div className="samhuckaby-container">

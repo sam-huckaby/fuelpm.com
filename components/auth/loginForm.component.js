@@ -47,10 +47,6 @@ export default class LoginForm extends Component {
         if (this.state.next === '/login') {
             redirectUrl = process.env.NEXT_PUBLIC_VERCEL_ENV + '/app/dashboard';
         }
-        // This URL seems to not work:
-        // http://localhost:4000/app/p/A%20Working%20Project
-        // console.log(Router);
-        // console.log(this.state.next);
 
         const { error } = await supabase.auth.signIn({ email: this.state.fuelEmail }, { redirectTo: redirectUrl });
         if (error) throw error;

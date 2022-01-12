@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { supabase } from "../../../../utils/supabaseClient";
 import { supabaseCaptureSSRCookie } from '../../../../utils/helpers';
+import { textColorChoice } from '../../../../utils/helpers';
 
 import AuthGuard from '../../../../components/auth/authGuard.component';
 import FloatingHeader from '../../../../components/common/floatingHeader.component';
@@ -22,14 +23,6 @@ export default function Project(props) {
         });
     }
 
-    function colorChoice(hexString) {
-        let noHash = hexString.substring(1);
-        let result = parseInt(noHash, 16);
-
-        // Max Hex value is 16777215, so use "about" 1/8th as the mark to swap to white text
-        return (result < 40000)? 'white' : 'black';
-    }
-
     function renderTasks() {
         if (props?.projects[0]?.tasks && props?.projects[0]?.tasks.length) {
             return (
@@ -39,7 +32,7 @@ export default function Project(props) {
                             <div className="flex flex-col py-4 px-2 mb-2 hover:bg-stone-400/25 active:bg-stone-400/25 border-stone-300 border-solid border">
                                 <div className="flex flex-row justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
-                                    <span style={{backgroundColor: cur.states.color, color: colorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
+                                    <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
                                 <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300">{cur.description}</span>
                             </div>

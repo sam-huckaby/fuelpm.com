@@ -123,8 +123,8 @@ export default class FloatingHeader extends Component {
 
     render() {
         return (
-            <div className={`${styles['fuel-nav-container']}`}>
-                <div className={`${styles['fuel-menu-row']} bg-orange-600 top-0 right-0 left-0 flex flex-row items-center`}> 
+            <div className={`${styles['fuel-nav-container']} h-[60px]`}>
+                <div className={`${styles['fuel-menu-row']} bg-orange-600 top-0 right-0 left-0 h-[60px] w-full box-border flex flex-row items-center`}> 
                     <div className={((this.props.noTopbranding)? 'hidden' : '') + ` ${styles['fuel-header-logo-container']} text-black flex flex-row pl-3 items-center text-4xl font-mono`}>
                         <span className="fuel-header-logo-fuel">Fuel</span>
                         <div className="fuel-header-logo-pm-container flex flex-col justify-center items-center">
@@ -135,7 +135,7 @@ export default class FloatingHeader extends Component {
                     <div className="flex-auto">&nbsp;</div>
                     <button onClick={() => this.toggleMenu()} className="bg-transparent active:bg-white/30 text-white h-14 w-14 text-3xl flex flex-row justify-center items-center">&equiv;</button>
                 </div>
-                <div className={((this.state.menuOpen)? 'translate-x-0' : 'translate-x-full') + ` ${styles['fuel-index-menu']} w-screen md:max-w-sm fixed shadow-lg transform right-0 bg-orange-600 fixed overflow-auto ease-in-out transition-all duration-300 z-20 border-t border-solid border-stone-700 flex flex-col`}>
+                <div className={((this.state.menuOpen)? 'translate-x-0' : 'translate-x-full') + ` ${styles['fuel-index-menu']} w-screen md:max-w-sm fixed shadow-lg transform right-0 top-[60px] bg-orange-600 overflow-auto ease-in-out transition-all duration-300 z-20 border-t border-solid border-stone-700 flex flex-col`}>
                     {/* BEGIN logged-out buttons */}
                     <button onClick={() => this.buttonJump('features')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Features</button>
                     <button onClick={() => this.buttonJump('pricing')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>Pricing</button>

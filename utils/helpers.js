@@ -39,3 +39,11 @@ export function supabaseCaptureSSRCookie (req) {
         access_token: req.cookies['sb:token']
     })
 }
+
+export function textColorChoice(hexString) {
+    let noHash = hexString.substring(1);
+    let result = parseInt(noHash, 16);
+
+    // Max Hex value is 16777215, so use "about" 1/8th as the mark to swap to white text
+    return (result < 40000)? 'white' : 'black';
+}

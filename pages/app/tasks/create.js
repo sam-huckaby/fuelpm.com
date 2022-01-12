@@ -28,16 +28,15 @@ export default function CreateTask(props) {
                     name,
                     project_id: props.projectId,
                     description,
-                    state_id: state
+                    state_id: state,
+                    serial: props.nextSerial
                 }
             ]);
 
         if (error) throw error;
 
-        console.log(data);
-
-        // Send the user on to the detail page of their new project
-        // router.push(`/app/p/${data[0].name}`);
+        // Send the user on to the detail page of their new task
+        router.push(`/app/p/${props.projectName}/t/${name}`);
     }
 
     function reset() {
@@ -103,20 +102,44 @@ export async function getServerSideProps({ req, query}) {
     // In order to get anything back, we need to scrape the user's JWT and apply it to this call
     supabase.auth.session = supabaseCaptureSSRCookie(req);
 
-    // Grab all the projects
-    let { data: projects, error } = await supabase
-        .from('projects')
-        .select('id, states!states_project_id_fkey(*)')
-        .eq('id', query.project_id);
-        
-    if (error) throw error;
+    let projectDetails = {};
+    try {
+        // Grab all the projects
+        let { data: projects, error } = await supabase
+            .from('projects')
+            .select('id, name, states!states_project_id_fkey(*)')
+            .eq('id', query.project_id);
+            
+        if (error) throw error;
 
-    console.log(projects);
+        projectDetails = projects;
+    } catch (e) {
+        console.log(e);
+    }
+    
+    // Retrieve the next serial number
+    let nextSerial = 1;
+    try {
+        const { data, error } = await supabase
+            .rpc('next_serial_number', { project_id: query.project_id });
+            
+        if (error) throw error;
+
+        if (!data) {
+            nextSerial = 1;
+        } else {
+            nextSerial = parseInt(data, 10) + 1;
+        }
+    } catch (e) {
+        console.log(e);
+    }
 
     return {
         props: {
-            availableStates: [...projects[0].states],
+            availableStates: [...projectDetails[0].states],
+            nextSerial,
             projectId: query.project_id,
+            projectName: projectDetails[0].name
         },
     }
 }

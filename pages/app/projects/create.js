@@ -34,8 +34,6 @@ export default function CreateProject() {
     ]);
 
     // References
-    const nameInput = useRef('');
-    const descriptionInput = useRef('');
     const nonTerminalInput = useRef('');
     const terminalInput = useRef('');
 
@@ -137,8 +135,6 @@ export default function CreateProject() {
         ]);
 
         // Set form back to defaults
-        nameInput.current.value = '';
-        descriptionInput.current.value = '';
         nonTerminalInput.current.value = '';
         terminalInput.current.value = '';
     }
@@ -155,7 +151,7 @@ export default function CreateProject() {
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_name">Name</label>
                     <input
-                        ref={nameInput}
+                        value={name}
                         onChange={e => setName(e.target.value)}
                         className="rounded border border-solid border-orange-600 bg-transparent h-8"
                         type="text"
@@ -165,7 +161,7 @@ export default function CreateProject() {
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_description">Description</label>
                     <textarea 
-                        ref={descriptionInput}
+                        value={description}
                         onChange={e => setDescription(e.target.value)}
                         className="rounded border border-solid border-orange-600 bg-transparent h-8"
                         name="description"

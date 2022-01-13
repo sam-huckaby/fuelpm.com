@@ -21,10 +21,10 @@ function AllProjects(props) {
                         props.projects.map(
                             (cur) => 
                                 <Link key={cur.name} href={`/app/p/${encodeURIComponent(cur.name)}`}>
-                                    <div className="flex flex-col justify-center items-center
-                                                    p-4 mt-2
-                                                    bg-stone-700/20 hover:bg-stone-700/10 active:bg-white
-                                                    dark:bg-white/20 hover:dark:bg-white/10 active:dark:bg-stone-700">
+                                    <div className="flex flex-col justify-center items-center cursor-pointer
+                                                    p-4 mt-2 border-stone-400 border-solid border
+                                                    hover:bg-stone-700/10 active:bg-white
+                                                    hover:dark:bg-white/10 active:dark:bg-stone-700">
                                         <div className="text-lg">{cur.name}</div>
                                     </div>
                                 </Link>

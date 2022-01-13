@@ -18,9 +18,9 @@ export default function Project(props) {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-3">
-                <div>
+                <div className="mb-1">
                     <Link href={`/app/p/${router.query.projectName}`}>
-                        <span className="underline">&lt; Back to Project</span>
+                        <span className="pb-1 cursor-pointer border-b border-solid border-stone-700 dark:border-white">&#8249; Back to Project</span>
                     </Link>
                 </div>
                 <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
@@ -30,7 +30,7 @@ export default function Project(props) {
                 <div className="py-4 flex flex-row justify-between items-center">
                     <span style={{backgroundColor: Task.states.color, color: textColorChoice(Task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{Task.states.label}</span>
                     <div className="flex flex-col justify-start items-start">
-                        <span className="text-stone-300 text-xs">Last Updated</span>
+                        <span className="text-stone-500 dark:text-stone-300 text-xs">Last Updated</span>
                         <span>{(new Date(Task.updated_at)).toLocaleString()}</span>
                     </div>
                 </div>

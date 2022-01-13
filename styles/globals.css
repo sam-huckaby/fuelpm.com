@@ -15,7 +15,7 @@
     /* Default styles for buttons */
     button {
         /* Generic styles */
-        @apply rounded border bg-transparent;
+        @apply rounded border bg-transparent p-1;
 
         /* Light-mode styles */
         @apply border-stone-700;

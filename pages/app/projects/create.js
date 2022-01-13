@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import AuthGuard from '../../../components/auth/authGuard.component';
 import FloatingHeader from '../../../components/common/floatingHeader.component';
@@ -147,7 +148,10 @@ export default function CreateProject() {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2">
-                <div className="text-2xl font-mono flex flex-row items-center pb-2 border-b border-solid border-orange-600">Project Details:</div>
+                <div className="flex flex-row justify-between items-center pb-2 border-b border-solid border-orange-600">
+                    <span className="text-2xl font-mono">Project Details:</span>
+                    <Link href="/app/projects"><button>Cancel</button></Link>
+                </div>
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_name">Name</label>
                     <input

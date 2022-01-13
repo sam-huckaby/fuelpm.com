@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import { supabase } from "../../../utils/supabaseClient";
 import { supabaseCaptureSSRCookie } from '../../../utils/helpers';
@@ -51,7 +52,10 @@ export default function CreateTask(props) {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2">
-                <div className="text-2xl font-mono flex flex-row items-center pb-2 border-b border-solid border-orange-600">Task Details:</div>
+                <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-orange-600">
+                    <span className="text-2xl font-mono">Task Details:</span>
+                    <Link href={`/app/p/${props.projectName}`}><button>Cancel</button></Link>
+                </div>
                 <div className="flex flex-col pt-3">
                     <label htmlFor="project_name">Name</label>
                     <input

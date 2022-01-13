@@ -114,7 +114,7 @@ export default class FloatingHeader extends Component {
             return (
                 <Link href="/logout">
                     <button
-                        className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-t border-b-0 border-r-0 border-l-0 rounded-none`}>
+                        className={`p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-t border-b-0 border-r-0 border-l-0 rounded-none`}>
                         Sign Out
                     </button>
                 </Link>
@@ -134,16 +134,16 @@ export default class FloatingHeader extends Component {
                 </div>
                 <div className={((this.state.menuOpen)? 'translate-x-0' : 'translate-x-full') + ` ${styles['fuel-index-menu']} w-screen md:max-w-sm fixed shadow-lg transform right-0 top-[60px] bg-orange-600 overflow-auto ease-in-out transition-all duration-300 z-20 border-t border-solid border-stone-700 flex flex-col`}>
                     {/* BEGIN logged-out buttons */}
-                    <button onClick={() => this.buttonJump('features')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Features</button>
-                    <button onClick={() => this.buttonJump('pricing')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Pricing</button>
+                    <button onClick={() => this.buttonJump('features')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Features</button>
+                    <button onClick={() => this.buttonJump('pricing')} className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Pricing</button>
                     {/* Uncomment this when there are some questions to be answered */}
                     {/* <button onClick={() => buttonJump('faqs')} className={`p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b`}>FAQs</button> */}
-                    <Link href="/login"><button className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Get Started / Login</button></Link>
+                    <Link href="/login"><button className={((this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Get Started / Login</button></Link>
                     {/* END logged-out buttons */}
                     {/* BEGIN logged-in buttons */}
-                    <Link href="/app/dashboard"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Dashboard</button></Link>
-                    <Link href="/app/projects"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Projects</button></Link>
-                    <Link href="/app/settings"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Settings</button></Link>
+                    <Link href="/app/dashboard"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Dashboard</button></Link>
+                    <Link href="/app/projects"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Projects</button></Link>
+                    <Link href="/app/settings"><button className={((!this.state.loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Settings</button></Link>
                     {/* END logged-in buttons */}
                     {/* Spacer to push the logout button to the bottom of the menu */}
                     <div className="flex-auto">&nbsp;</div>

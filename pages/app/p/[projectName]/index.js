@@ -1,34 +1,91 @@
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import { supabase } from "../../../../utils/supabaseClient";
-import { supabaseCaptureSSRCookie } from '../../../../utils/helpers';
 import { textColorChoice } from '../../../../utils/helpers';
 
-import AuthGuard from '../../../../components/auth/authGuard.component';
-import FloatingHeader from '../../../../components/common/floatingHeader.component';
+import AuthGuard from '../../../../components/auth/AuthGuard';
+import FloatingHeader from '../../../../components/common/FloatingHeader';
+import LoadingPane from '../../../../components/common/LoadingPane';
 
-export default function Project(props) {
+export default function Project() {
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     // TODO: Consider the implications of there being two projects with the same name
     // Should the DB prevent duplicate names within the same account? - Yes (Sam, January 8th, 2022) [Added Unique constraint on `projects`]
     // Should there be a different page for projects that don't belong to the current user?
     const router = useRouter();
 
+    useEffect(() => {
+        const fetchProject = async () => {
+            if (router.query.projectName) {
+                // Grab all the projects
+                let { data: projects, error } = await supabase
+                    .from('projects')
+                    .select('*, tasks(*, states(*))')
+                    .eq('name', router.query.projectName);
+
+                if (error) throw error;
+                
+                if (projects.length === 0) {
+                    setProject({
+                        notFound: true
+                    });
+                    setLoading(false);
+                } else if (projects.length === 1) {
+                    setProject(projects[0]);
+                    setLoading(false);
+                } else {
+                    throw 'More than one project found';
+                }
+            }
+        }
+        fetchProject();
+    }, [router.query.projectName]);
+
     function addTask() {
         router.push({
             pathname: '/app/tasks/create',
             query: {
-                project_id: props.projects[0].id,
+                project_id: project.id,
             },
         });
     }
 
-    function renderTasks() {
-        if (props?.projects[0]?.tasks && props?.projects[0]?.tasks.length) {
+    function renderDetails() {
+        if (loading) {
+            return <></>;
+        } else if (project && project.notFound) {
+            return <div>Sorry! That project doesn't seem to exist.</div>;
+        } else {
             return (
                 <>
-                    {props?.projects[0]?.tasks.map((cur) => 
-                        <Link key={cur.name} href={`/app/p/${props?.projects[0]?.name}/t/${cur.name}`}>
+                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
+                        <div className="text-3xl">{project?.name}</div>
+                        <button className="p-2 border-solid border border-stone-400 rounded">Edit</button>
+                    </div>
+                    <div className="text-sm">{project?.description}</div>
+                    <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
+                        <span className="text-lg">Tasks</span>
+                        <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
+                    </div>
+                    <div className="flex flex-col">
+                        {renderTasks()}
+                    </div>
+                </>
+            );
+        }
+    }
+
+    function renderTasks() {
+        if (project?.tasks && project?.tasks.length) {
+            return (
+                <>
+                    {project?.tasks.map((cur) => 
+                        <Link key={cur.name} href={`/app/p/${project?.name}/t/${cur.name}`}>
                             <div className="flex flex-col py-4 px-2 mb-2 border-stone-400 border-solid border cursor-pointer
                                 hover:bg-stone-700/10 active:bg-white
                                 hover:dark:bg-white/10 active:dark:bg-stone-700">
@@ -51,51 +108,23 @@ export default function Project(props) {
 
     return (
         <div className="flex flex-col min-h-screen">
+            <Head>
+                <title>{(loading)? 'Loading...' : project.name} | FuelPM</title>
+                <meta name="description" content={((loading)? 'Loading...' : project.description)} />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content={((loading)? 'Loading...' : project.name) + ' | FuelPM'} />
+                <meta
+                    property="og:description"
+                    content={((loading)? 'Loading...' : project.description)}
+                />
+                <link rel="icon" href="/Fuel-Favicon.svg" />
+            </Head>
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-3">
-                <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
-                    <div className="text-3xl">{props?.projects[0]?.name}</div>
-                    <button className="p-2 border-solid border border-stone-400 rounded">Edit</button>
-                </div>
-                {/* Swap in for a description */}
-                <div className="text-sm">{props?.projects[0]?.description}</div>
-                <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
-                    <span className="text-lg">Tasks</span>
-                    <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
-                </div>
-                <div className="flex flex-col">
-                    {renderTasks()}
-                </div>
+                <LoadingPane loading={loading}></LoadingPane>
+                { renderDetails() }
             </div>
         </div>
     );
 }
-
-export async function getServerSideProps({ req, params }) {
-    if (params?.projectName) {
-        // This code is run on the server, so it does not have access to the browser memory session
-        // In order to get anything back, we need to scrape the user's JWT and apply it to this call
-        supabase.auth.session = supabaseCaptureSSRCookie(req);
-
-        // Grab all the projects
-        let { data: projects, error } = await supabase
-            .from('projects')
-            .select('*, tasks(*, states(*))')
-            .eq('name', params.projectName);
-
-        if (error) throw error;
-
-        return {
-            props: {
-                projects
-            },
-        }
-    } else {
-        return {
-            props: {
-                projects: []
-            }
-        }
-    }
-}  

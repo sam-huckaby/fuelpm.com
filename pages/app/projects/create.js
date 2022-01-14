@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
-import AuthGuard from '../../../components/auth/authGuard.component';
-import FloatingHeader from '../../../components/common/floatingHeader.component';
+import AuthGuard from '../../../components/auth/AuthGuard';
+import FloatingHeader from '../../../components/common/FloatingHeader';
 import { supabase } from "../../../utils/supabaseClient";
 
 export default function CreateProject() {
@@ -141,6 +142,18 @@ export default function CreateProject() {
 
     return (
         <div className="flex flex-col min-h-screen">
+            <Head>
+                <title>Create a New Project | FuelPM</title>
+                <meta name="description" content="Create a new project to track your work." />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://www.fuelpm.com/app/projects/create" />
+                <meta property="og:title" content="Create a New Project | FuelPM" />
+                <meta
+                    property="og:description"
+                    content="Create a new project to track your work."
+                />
+                <link rel="icon" href="/Fuel-Favicon.svg" />
+            </Head>
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2">
@@ -185,10 +198,10 @@ export default function CreateProject() {
                         <>
                             {
                                 nonTerminalStates.map(item =>
-                                    <div key={item.label} id={item.label+'_nonterminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-stone-500 mr-4 mt-3">
+                                    <div key={item.label} id={item.label+'_nonterminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-stone-300 dark:bg-stone-500 mr-4 mt-3">
                                         <input className="h-[25px] w-[20px] bg-transparent" type="color" defaultValue={item.color} />
-                                        <label htmlFor={item.label+'_nonterminal_status'} className="text-white flex-auto flex flex-row justify-center items-center">{item.label}</label>
-                                        <button onClick={() => removeNonTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2">X</button>
+                                        <label htmlFor={item.label+'_nonterminal_status'} className="text-black dark:text-white flex-auto flex flex-row justify-center items-center">{item.label}</label>
+                                        <button onClick={() => removeNonTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2 border-none text-white">X</button>
                                     </div>
                                 )
                             }
@@ -213,10 +226,10 @@ export default function CreateProject() {
                         <>
                         {
                             terminalStates.map(item =>
-                                <div key={item.label} id={item.label+'_terminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-stone-500 mr-4 mt-3">
+                                <div key={item.label} id={item.label+'_terminal_status'} className="inline-block flex flex-row justify-start items-center min-w-[75px] rounded bg-stone-300 dark:bg-stone-500 mr-4 mt-3">
                                     <input className="h-[25px] w-[20px] bg-transparent" type="color" defaultValue={item.color} />
-                                    <label htmlFor={item.label+'_terminal_status'} className="text-white flex-auto">{item.label}</label>
-                                    <button onClick={() => removeTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2">X</button>
+                                    <label htmlFor={item.label+'_terminal_status'} className="text-black dark:text-white flex-auto">{item.label}</label>
+                                    <button onClick={() => removeTerminal(item.label)} className="h-4 w-4 text-base flex flex-row justify-center items-center ml-2 border-none text-white">X</button>
                                 </div>
                             )
                         }

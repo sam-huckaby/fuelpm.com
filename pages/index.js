@@ -116,9 +116,9 @@ export default function Home() {
           <span className="text-black">Keep your projects running on full.</span>
         </div>
         <div id="concept_bar" className="fuel-concept-bar bg-stone-700 flex flex-row">
-          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Simple</button>
-          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-stone-800 border-r border-t-0 border-b-0 rounded-none`}>Shareable</button>
-          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Trackable</button>
+          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white hover:bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Simple</button>
+          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white hover:bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-stone-800 border-r border-t-0 border-b-0 rounded-none`}>Shareable</button>
+          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white hover:bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Trackable</button>
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export default function Home() {
       <div className={`fuel-call-to-action flex flex-col`}>
         <div className="font-bold mb-5">Ready to get to work?</div>
         <Link href="/app/dashboard">
-          <button className={`fuel-cta-signup-button rounded bg-orange-600 text-white p-3 mb-5`}>Get Started / Login</button>
+          <button className={`fuel-cta-signup-button rounded bg-orange-600 hover:bg-orange-500 text-white p-3 mb-5`}>Get Started / Login</button>
         </Link>
       </div>
 

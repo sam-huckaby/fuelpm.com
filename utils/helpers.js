@@ -23,6 +23,25 @@ export function smoothScroll(target) {
     scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
 }
 
+// Scroll code taken from https://css-tricks.com/styling-based-on-scroll-position/
+// The debounce function receives our function as a parameter
+export function debounce(fn) {
+    // This holds the requestAnimationFrame reference, so we can cancel it if we wish
+    let frame;
+    // The debounce function returns a new function that can receive a variable number of arguments
+    return (...params) => {
+        // If the frame variable has been defined, clear it now, and queue for next frame
+        if (frame) { 
+            cancelAnimationFrame(frame);
+        }
+        // Queue our function call for the next frame
+        frame = requestAnimationFrame(() => {
+            // Call our function and pass any params we received
+            fn(...params);
+        });
+    } 
+}
+
 export function validateObject(obj, requiredProps) {
     let valid = true;
     for (let i = 0; i < requiredProps.length; i++) {
@@ -46,4 +65,15 @@ export function textColorChoice(hexString) {
 
     // Max Hex value is 16777215, so use "about" 1/8th as the mark to swap to white text
     return (result < 40000)? 'white' : 'black';
+}
+
+export function handleAuthErrors(err) {
+    let reroute = false
+    let path = '';
+
+    switch (err.message) {
+        case 'JWT expired':
+            console.log('User session has expired.');
+            break;
+    }
 }

@@ -12,6 +12,7 @@ import LoadingPane from '../../../../components/common/LoadingPane';
 
 export default function Project() {
     const [project, setProject] = useState(null);
+    const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
 
     // TODO: Consider the implications of there being two projects with the same name
@@ -46,13 +47,18 @@ export default function Project() {
         fetchProject();
     }, [router.query.projectName]);
 
-    function addTask() {
-        router.push({
-            pathname: '/app/tasks/create',
-            query: {
-                project_id: project.id,
-            },
-        });
+    // Data manipulation functions
+    function nameChange(value) {
+        project.name = value;
+    }
+
+    function descriptionChange(value) {
+        project.description = value;
+    }
+
+    function saveProjectEdits() {
+        console.log('SAVING...');
+        setEditing(false);
     }
 
     function renderDetails() {
@@ -64,10 +70,14 @@ export default function Project() {
             return (
                 <>
                     <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
-                        <div className="text-3xl">{project?.name}</div>
-                        <button className="p-2 border-solid border border-stone-400 rounded">Edit</button>
+                        { renderNameField() }
+                        {
+                            (editing)?
+                            <button onClick={saveProjectEdits} className="p-2 border-solid border border-stone-400 rounded">Save</button> :
+                            <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
+                        }
                     </div>
-                    <div className="text-sm">{project?.description}</div>
+                    { renderDescriptionField() }
                     <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                         <span className="text-lg">Tasks</span>
                         <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
@@ -78,6 +88,46 @@ export default function Project() {
                 </>
             );
         }
+    }
+
+    function renderNameField() {
+        if (editing) {
+            return (
+                <input
+                    className="bg-transparent rounded border-white border border-solid p-2"
+                    type="text"
+                    defaultValue={project.name}
+                    onChange={(e) => nameChange(e.target.value)} />
+            );
+        } else {
+            return (
+                <div className="text-3xl">{project.name}</div>
+            );
+        }
+    }
+
+    function renderDescriptionField() {
+        if (editing) {
+            return (
+                <textarea
+                    className="bg-transparent rounded border-white border border-solid p-2"
+                    defaultValue={project.description}
+                    onChange={(e) => descriptionChange(e.target.value)} />
+            );
+        } else {
+            return (
+                <div className="text-sm">{project.description}</div>
+            );
+        }
+    }
+
+    function addTask() {
+        router.push({
+            pathname: '/app/tasks/create',
+            query: {
+                project_id: project.id,
+            },
+        });
     }
 
     function renderTasks() {

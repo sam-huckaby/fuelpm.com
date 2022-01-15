@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import FloatingHeader from '../components/common/floatingHeader.component';
+import FloatingHeader from '../components/common/FloatingHeader';
 
 export default function Home() {
   const [concept, setConcept] = useState(0);

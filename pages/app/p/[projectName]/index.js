@@ -11,9 +11,14 @@ import FloatingHeader from '../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../components/common/LoadingPane';
 
 export default function Project() {
+    // View state values
     const [project, setProject] = useState(null);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    // Project state values
+    const [newName, setNewName] = useState('');
+    const [newDescription, setNewDescription] = useState('');
 
     // TODO: Consider the implications of there being two projects with the same name
     // Should the DB prevent duplicate names within the same account? - Yes (Sam, January 8th, 2022) [Added Unique constraint on `projects`]
@@ -47,17 +52,10 @@ export default function Project() {
         fetchProject();
     }, [router.query.projectName]);
 
-    // Data manipulation functions
-    function nameChange(value) {
-        project.name = value;
-    }
-
-    function descriptionChange(value) {
-        project.description = value;
-    }
-
     function saveProjectEdits() {
         console.log('SAVING...');
+        console.log(newName);
+        console.log(newDescription);
         setEditing(false);
     }
 
@@ -73,7 +71,12 @@ export default function Project() {
                         { renderNameField() }
                         {
                             (editing)?
-                            <button onClick={saveProjectEdits} className="p-2 border-solid border border-stone-400 rounded">Save</button> :
+                            (
+                                <>
+                                    <button onClick={() => setEditing(false)}>Cancel</button>
+                                    <button onClick={saveProjectEdits} className="p-2 border-solid border border-stone-400 rounded">Save</button>
+                                </>
+                            ) :
                             <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                         }
                     </div>
@@ -97,7 +100,7 @@ export default function Project() {
                     className="bg-transparent rounded border-white border border-solid p-2"
                     type="text"
                     defaultValue={project.name}
-                    onChange={(e) => nameChange(e.target.value)} />
+                    onChange={(e) => setNewName(e.target.value)} />
             );
         } else {
             return (
@@ -112,7 +115,8 @@ export default function Project() {
                 <textarea
                     className="bg-transparent rounded border-white border border-solid p-2"
                     defaultValue={project.description}
-                    onChange={(e) => descriptionChange(e.target.value)} />
+                    rows={5}
+                    onChange={(e) => setNewDescription(e.target.value)} />
             );
         } else {
             return (

@@ -73,17 +73,6 @@ export default function Project() {
     }
 
     async function deleteThisProject() {
-        console.log('OH NO! YOU KILLED IT!');
-
-        // Remove members from the project using Supabase
-        // members_project_id_fkey
-
-        // Remove states from the project using Supabase
-        // states_project_id_fkey
-
-        // Remove tasks from the project using Supabase
-        // tasks_project_id_fkey
-
         // Call Supabase to remove this project
         const { data, error } = await supabase
             .from('projects')

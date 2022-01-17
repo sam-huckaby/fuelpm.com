@@ -1,16 +1,12 @@
-// Logic
-.fuel-menu-row {
-    width: 100%;
-    // Set a static height for the scroll effect
-    height: 60px;
-    box-sizing: border-box;
+.fuel-index-menu {
+    height: calc(100vh - 60px);
 }
 
 .fuel-nav-container:not([data-scroll='0']) {
     .fuel-menu-row {
         position: fixed;
         top: 0;
-        box-shadow: 0 0 .5em rgba(0, 0, 0, .5);
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         z-index: 10;
     }
 

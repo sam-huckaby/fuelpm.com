@@ -1,35 +1,15 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
+import Image from 'next/image';
 
-import FloatingHeader from '../components/common/floatingHeader.component';
+import FloatingHeader from '../components/common/FloatingHeader';
 
 export default function Home() {
   const [concept, setConcept] = useState(0);
 
-  function smoothScroll(target) {
-    var scrollContainer = target;
-    do { //find scroll container
-        scrollContainer = scrollContainer.parentNode;
-        if (!scrollContainer) return;
-        scrollContainer.scrollTop += 1;
-    } while (scrollContainer.scrollTop == 0);
-
-    var targetY = 0;
-    do { //find the top of target relatively to the container
-        if (target == scrollContainer) break;
-        targetY += target.offsetTop - 30;
-    } while (target = target.offsetParent);
-
-    scroll = function(c, a, b, i) {
-        i++; if (i > 30) return;
-        c.scrollTop = a + (b - a) / 30 * i;
-        setTimeout(function(){ scroll(c, a, b, i); }, 20);
-    }
-    // start scrolling
-    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
-  }
-
-  function toggleConcept(index) {
+  async function toggleConcept(index) {
+    const smoothScroll = (await import('../utils/helpers')).smoothScroll;
     setConcept(index);
     smoothScroll(document.getElementById('concept_bar'));
   }
@@ -46,7 +26,7 @@ export default function Home() {
 
             <div className="mt-3 text-2xl relative">
               Creating tasks, managing tasks, assigning tasks, making labels, assigning labels, expectations, goals, reports, and on and on...
-              <div className="bg-gradient-to-t from-[#FFFFFF] dark:from-stone-700 absolute top-0 right-0 bottom-0 left-0">&nbsp;</div>
+              <div className="bg-gradient-to-tl from-[#FFFFFF] dark:from-stone-700 absolute top-0 right-0 bottom-0 left-0">&nbsp;</div>
             </div>
 
             <div className="text-4xl font-bold mt-10 mb-5">
@@ -70,7 +50,7 @@ export default function Home() {
 
             <div className="mt-3 text-2xl relative">
               Does my client know what's next? Did my teammates get their work done? Checking email, instant messaging, calling, and on and on...
-              <div className="bg-gradient-to-t from-[#FFFFFF] dark:from-stone-700 absolute top-0 right-0 bottom-0 left-0">&nbsp;</div>
+              <div className="bg-gradient-to-tl from-[#FFFFFF] dark:from-stone-700 absolute top-0 right-0 bottom-0 left-0">&nbsp;</div>
             </div>
 
             <div className="text-4xl font-bold mt-10 mb-5">
@@ -94,7 +74,7 @@ export default function Home() {
 
             <div className="mt-3 text-2xl relative">
               Sent that report, did I update my status? Changed all the logos, did I update my task?, updating, catching up, and on and on...
-              <div className="bg-gradient-to-t from-[#FFFFFF] dark:from-stone-700 absolute top-0 right-0 bottom-0 left-0">&nbsp;</div>
+              <div className="bg-gradient-to-tl from-[#FFFFFF] dark:from-stone-700 absolute top-0 right-0 bottom-0 left-0">&nbsp;</div>
             </div>
 
             <div className="text-4xl font-bold mt-10 mb-5">
@@ -115,26 +95,30 @@ export default function Home() {
   return (
     <div className="fuel-main-container flex flex-col items-center justify-center min-h-screen pb-2 dark:bg-stone-700 dark:text-white">
       <Head>
-        <title>Fuel Project Management - Fuel Your Project</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>FuelPM - Fuel Your Project with efficient, linear management</title>
+        <meta name="description" content="FuelPM is a linear, easy to use project management software designed to be touched as little as possible." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.fuelpm.com/" />
+        <meta property="og:title" content="FuelPM - Efficient, linear project management" />
+        <meta
+          property="og:description"
+          content="FuelPM is a linear, easy to use project management software designed to be touched as little as possible."
+        />
+        <link rel="icon" href="/Fuel-Favicon.svg" />
       </Head>
 
       <div className="fuel-bigscreen-container h-screen w-screen flex flex-col bg-orange-600">
-        <FloatingHeader></FloatingHeader>
+        <FloatingHeader noTopbranding="true"></FloatingHeader>
         <div className="fuel-bigscreen flex-auto flex flex-col justify-center items-center">
-          <div className="fuel-logo-container text-black flex flex-row text-7xl font-mono">
-            <span className="fuel-logo-fuel">Fuel</span>
-            <div className="fuel-logo-pm-container flex flex-col justify-center items-center">
-              <span className="fuel-logo-p text-3xl leading-8">P</span>
-              <span className="fuel-logo-m text-3xl leading-8">M</span>
-            </div>
+          <div className="w-screen flex flex-row justify-center items-center">
+            <Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={380} height={250}/>
           </div>
           <span className="text-black">Keep your projects running on full.</span>
         </div>
-        <div id="concept_bar" className="fuel-concept-bar bg-zinc-700 flex flex-row">
-          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Simple</button>
-          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-zinc-800 border-r`}>Shareable</button>
-          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white text-zinc-700' : 'bg-transparent text-white hover:bg-white hover:text-zinc-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center`}>Trackable</button>
+        <div id="concept_bar" className="fuel-concept-bar bg-stone-700 flex flex-row">
+          <button onClick={() => toggleConcept(0)} className={((concept === 0) ? 'bg-white hover:bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Simple</button>
+          <button onClick={() => toggleConcept(1)} className={((concept === 1) ? 'bg-white hover:bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-solid border-l border-stone-800 border-r border-t-0 border-b-0 rounded-none`}>Shareable</button>
+          <button onClick={() => toggleConcept(2)} className={((concept === 2) ? 'bg-white hover:bg-white text-stone-700' : 'bg-transparent text-white hover:bg-white hover:text-stone-700') + ` h-14 text-xl flex flex-row flex-1 justify-center items-center border-none rounded-none`}>Trackable</button>
         </div>
       </div>
 
@@ -142,9 +126,46 @@ export default function Home() {
         {renderConcept(concept)}
       </main>
 
+      <div id="fuel_pricing_container" className={`flex flex-col items-center w-full px-5 pb-5`}>
+        <div className={`text-3xl w-100`}>Pricing</div>
+        <div className={`grid grid-cols-3`}>
+          <div></div>
+          <div className={`fuel-free-grid-label p-2 text-green-600 font-bold`}>Free Tier</div>
+          {/* <div className={`fuel-no-limits-grid-label p-2 text-orange-600 font-bold`}>No Limits</div> */}
+          <div></div>
+
+          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Monthly Cost</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>$0 (forever)</div>
+          {/* <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>$5 / member</div> */}
+          <div></div>
+
+          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Projects</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>5</div>
+          {/* <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div> */}
+          <div></div>
+
+          <div className={`fuel-pricing-type-label p-2 border-solid border-t border-stone-300`}>Members</div>
+          <div className={`fuel-pricing-item-label p-2 border-solid border-t border-r border-stone-300`}>5</div>
+          {/* <div className={`fuel-pricing-item-label p-2 border-solid border-t border-stone-300`}>No Limit</div> */}
+          <div></div>
+        </div>
+      </div>
+
+      <div className="pb-5 underline">
+        Unlimited Accounts Available In The Future.
+      </div>
+
+{/* Uncomment this when there are some questions to be answered */}
+      {/* <div id="fuel_faqs_container" className={`flex flex-col items-center w-full px-5 py-2`}>
+        <div className="text-3xl w-100">FAQs</div>
+
+      </div> */}
+
       <div className={`fuel-call-to-action flex flex-col`}>
         <div className="font-bold mb-5">Ready to get to work?</div>
-        <button className={`fuel-cta-signup-button rounded bg-orange-600 text-white p-3 mb-5`}>Get Started</button>
+        <Link href="/app/dashboard">
+          <button className={`fuel-cta-signup-button rounded bg-orange-600 hover:bg-orange-500 text-white p-3 mb-5`}>Get Started / Login</button>
+        </Link>
       </div>
 
       <footer className="flex items-center justify-center w-full h-24 border-t flex-col">
@@ -156,7 +177,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             Powered by{' '}
-            <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} className="h-4 ml-2" />
           </a>
         </div>
         <div className="samhuckaby-container">

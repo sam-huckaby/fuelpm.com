@@ -9,13 +9,13 @@ import { textColorChoice } from '../../../../utils/helpers';
 import AuthGuard from '../../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../components/common/LoadingPane';
+import Dropdown from '../../../../components/common/Dropdown';
 
 export default function Project() {
     // View state values
     const [project, setProject] = useState(null);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
     // Project state values
     const [newName, setNewName] = useState('');
@@ -62,7 +62,7 @@ export default function Project() {
                 name: newName,
                 description: newDescription,
             })
-            .eq('id', router.query.projectId)
+            .eq('id', router.query.projectId);
 
         if (error) throw error;
 
@@ -73,9 +73,27 @@ export default function Project() {
     }
 
     async function deleteThisProject() {
-        // Call Supabase to remove this project
-        // Call router to take us back to the projects page
         console.log('OH NO! YOU KILLED IT!');
+
+        // Remove members from the project using Supabase
+        // members_project_id_fkey
+
+        // Remove states from the project using Supabase
+        // states_project_id_fkey
+
+        // Remove tasks from the project using Supabase
+        // tasks_project_id_fkey
+
+        // Call Supabase to remove this project
+        const { data, error } = await supabase
+            .from('projects')
+            .delete()
+            .eq('id', router.query.projectId);
+
+        if (error) throw error;
+
+        // Call router to take us back to the projects page
+        router.push("/app/projects");
     }
 
     function renderDetails() {
@@ -99,20 +117,7 @@ export default function Project() {
                         {
                             (editing)?
                             (
-                                <div className="relative">
-                                    <button onClick={() => setSettingsMenuOpen(!settingsMenuOpen)} className="p-2 border-solid border border-stone-400 rounded">Settings</button>
-                                    <div className={((settingsMenuOpen)? 'absolute' : 'hidden') + ` right-0 py-2 mt-2 bg-white rounded-md shadow-xl w-44`}>
-                                        <a onClick={deleteThisProject} className="block px-4 py-2 text-sm text-red-800 hover:bg-gray-400">
-                                            Delete This Project
-                                        </a>
-                                        {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
-                                            Dropdown List 2
-                                        </a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
-                                            Dropdown List 3
-                                        </a> */}
-                                    </div>
-                                </div>
+                                <Dropdown title="Settings" items={[{label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-800'}]}></Dropdown>
                             ) :
                             <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                         }

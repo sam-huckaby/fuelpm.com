@@ -92,7 +92,7 @@ export default function CreateTask() {
         if (error) throw error;
 
         // Send the user on to the detail page of their new task
-        router.push(`/app/p/${router.query.project_id}/t/${name}`);
+        router.push(`/app/p/${router.query.project_id}/t/${nextSerial}`);
     }
 
     function reset() {

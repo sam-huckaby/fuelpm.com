@@ -9,13 +9,13 @@ import { textColorChoice } from '../../../../../utils/helpers';
 import AuthGuard from '../../../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../../components/common/LoadingPane';
+import Dropdown from '../../../../../components/common/Dropdown';
 
 export default function Project() {
     // View state values
     const [task, setTask] = useState(null);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
     // Data editing values
     const [newName, setNewName] = useState('');
@@ -57,10 +57,6 @@ export default function Project() {
     }
 
     async function saveTaskEdits() {
-        console.log(newName);
-        console.log(newDescription);
-        console.log(newState);
-        
         const { data, error } = await supabase
             .from('tasks')
             .update({
@@ -80,9 +76,19 @@ export default function Project() {
     }
 
     async function deleteThisTask() {
-        // Call Supabase to remove this task
-        // Call router to take us back to the parent project page
         console.log('OH NO! YOU KILLED THE TASK!');
+
+        // Call Supabase to remove this task
+        const { data, error } = await supabase
+            .from('tasks')
+            .delete()
+            .eq('project_id', router.query.projectId)
+            .eq('serial', router.query.taskSerial);
+
+        if (error) throw error;
+
+        // Call router to take us back to the parent project page
+        router.push(`/app/p/${router.query.projectId}`);
     }
 
     function renderTaskDetails() {
@@ -106,20 +112,7 @@ export default function Project() {
                         {
                             (editing)?
                             (
-                                <div className="relative">
-                                    <button onClick={() => setSettingsMenuOpen(!settingsMenuOpen)} className="p-2 border-solid border border-stone-400 rounded">Settings</button>
-                                    <div className={((settingsMenuOpen)? 'absolute' : 'hidden') + ` right-0 py-2 mt-2 bg-white rounded-md shadow-xl w-44`}>
-                                        <a onClick={deleteThisTask} className="block px-4 py-2 text-sm text-red-800 hover:bg-gray-400">
-                                            Delete This Task
-                                        </a>
-                                        {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
-                                            Dropdown List 2
-                                        </a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
-                                            Dropdown List 3
-                                        </a> */}
-                                    </div>
-                                </div>
+                                <Dropdown title="Settings" items={[{label: 'Delete This Task', onClick: deleteThisTask, classes: 'text-red-800'}]}></Dropdown>
                             ) :
                             <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                         }

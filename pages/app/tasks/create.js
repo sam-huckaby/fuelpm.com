@@ -57,7 +57,7 @@ export default function CreateTask() {
             let nextSerial = 1;
             try {
                 const { data, error } = await supabase
-                    .rpc('next_serial_number', { project_id: router.query.project_id });
+                    .rpc('next_serial', { task_project_id: parseInt(router.query.project_id, 10) });
                     
                 if (error) throw error;
 
@@ -92,7 +92,7 @@ export default function CreateTask() {
         if (error) throw error;
 
         // Send the user on to the detail page of their new task
-        router.push(`/app/p/${projectName}/t/${name}`);
+        router.push(`/app/p/${router.query.project_id}/t/${name}`);
     }
 
     function reset() {
@@ -168,7 +168,7 @@ export default function CreateTask() {
             <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2 relative">
                 <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-orange-600">
                     <span className="text-2xl font-mono">Task Details:</span>
-                    <Link href={`/app/p/${projectName}`}><button>Cancel</button></Link>
+                    <Link href={`/app/p/${router.query.project_id}`}><button>Cancel</button></Link>
                 </div>
                 <LoadingPane loading={loading}></LoadingPane>
                 { renderForm() }

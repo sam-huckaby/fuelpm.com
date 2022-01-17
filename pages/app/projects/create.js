@@ -108,7 +108,7 @@ export default function CreateProject() {
         if (createdStates.error) throw createdStates.error;
 
         // Send the user on to the detail page of their new project
-        router.push(`/app/p/${createdProject.data[0].name}`);
+        router.push(`/app/p/${createdProject.data[0].id}`);
     }
 
     function reset() {

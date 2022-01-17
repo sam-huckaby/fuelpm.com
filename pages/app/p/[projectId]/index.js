@@ -15,6 +15,7 @@ export default function Project() {
     const [project, setProject] = useState(null);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
     // Project state values
     const [newName, setNewName] = useState('');
@@ -27,12 +28,12 @@ export default function Project() {
 
     useEffect(() => {
         const fetchProject = async () => {
-            if (router.query.projectName) {
+            if (router.query.projectId) {
                 // Grab all the projects
                 let { data: projects, error } = await supabase
                     .from('projects')
                     .select('*, tasks(*, states(*))')
-                    .eq('name', router.query.projectName);
+                    .eq('id', router.query.projectId);
 
                 if (error) throw error;
                 
@@ -43,6 +44,8 @@ export default function Project() {
                     setLoading(false);
                 } else if (projects.length === 1) {
                     setProject(projects[0]);
+                    setNewName(projects[0].name);
+                    setNewDescription(projects[0].description);
                     setLoading(false);
                 } else {
                     throw 'More than one project found';
@@ -50,13 +53,29 @@ export default function Project() {
             }
         }
         fetchProject();
-    }, [router.query.projectName]);
+    }, [router.query.projectId]);
 
-    function saveProjectEdits() {
-        console.log('SAVING...');
-        console.log(newName);
-        console.log(newDescription);
+    async function saveProjectEdits() {
+        const { data, error } = await supabase
+            .from('projects')
+            .update({
+                name: newName,
+                description: newDescription,
+            })
+            .eq('id', router.query.projectId)
+
+        if (error) throw error;
+
+        data[0].tasks = project?.tasks;
+        setProject(data[0]);
+
         setEditing(false);
+    }
+
+    async function deleteThisProject() {
+        // Call Supabase to remove this project
+        // Call router to take us back to the projects page
+        console.log('OH NO! YOU KILLED IT!');
     }
 
     function renderDetails() {
@@ -68,19 +87,56 @@ export default function Project() {
             return (
                 <>
                     <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
-                        { renderNameField() }
+                        {
+                            (editing)?
+                                <input
+                                    className="bg-transparent rounded border-white border border-solid p-2"
+                                    type="text"
+                                    defaultValue={project.name}
+                                    onChange={(e) => setNewName(e.target.value)}></input> :
+                                <div className="text-3xl">{project.name}</div>
+                        }
                         {
                             (editing)?
                             (
-                                <>
-                                    <button onClick={() => setEditing(false)}>Cancel</button>
-                                    <button onClick={saveProjectEdits} className="p-2 border-solid border border-stone-400 rounded">Save</button>
-                                </>
+                                <div className="relative">
+                                    <button onClick={() => setSettingsMenuOpen(!settingsMenuOpen)} className="p-2 border-solid border border-stone-400 rounded">Settings</button>
+                                    <div className={((settingsMenuOpen)? 'absolute' : 'hidden') + ` right-0 py-2 mt-2 bg-white rounded-md shadow-xl w-44`}>
+                                        <a onClick={deleteThisProject} className="block px-4 py-2 text-sm text-red-800 hover:bg-gray-400">
+                                            Delete This Project
+                                        </a>
+                                        {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                                            Dropdown List 2
+                                        </a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                                            Dropdown List 3
+                                        </a> */}
+                                    </div>
+                                </div>
                             ) :
                             <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                         }
                     </div>
-                    { renderDescriptionField() }
+                    {
+                        (editing)?
+                            <textarea
+                                className="bg-transparent rounded border-white border border-solid p-2"
+                                defaultValue={project.description}
+                                rows={5}
+                                onChange={(e) => setNewDescription(e.target.value)} /> :
+                            <div className="text-sm">{project.description}</div>
+                    }
+                    <div className="flex flex-row justify-end">
+                        {
+                            (editing)?
+                            (
+                                <>
+                                    <button onClick={() => setEditing(false)} className="my-2">Cancel</button>
+                                    <button onClick={saveProjectEdits} className="ml-4 my-2 p-2 border-solid border border-stone-400 rounded">Save</button>
+                                </>
+                            ) : <></>
+                        }
+                    </div>
                     <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                         <span className="text-lg">Tasks</span>
                         <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
@@ -89,38 +145,6 @@ export default function Project() {
                         {renderTasks()}
                     </div>
                 </>
-            );
-        }
-    }
-
-    function renderNameField() {
-        if (editing) {
-            return (
-                <input
-                    className="bg-transparent rounded border-white border border-solid p-2"
-                    type="text"
-                    defaultValue={project.name}
-                    onChange={(e) => setNewName(e.target.value)} />
-            );
-        } else {
-            return (
-                <div className="text-3xl">{project.name}</div>
-            );
-        }
-    }
-
-    function renderDescriptionField() {
-        if (editing) {
-            return (
-                <textarea
-                    className="bg-transparent rounded border-white border border-solid p-2"
-                    defaultValue={project.description}
-                    rows={5}
-                    onChange={(e) => setNewDescription(e.target.value)} />
-            );
-        } else {
-            return (
-                <div className="text-sm">{project.description}</div>
             );
         }
     }
@@ -139,7 +163,7 @@ export default function Project() {
             return (
                 <>
                     {project?.tasks.map((cur) => 
-                        <Link key={cur.name} href={`/app/p/${project?.name}/t/${cur.name}`}>
+                        <Link key={cur.serial} href={`/app/p/${project?.id}/t/${cur.serial}`}>
                             <div className="flex flex-col py-4 px-2 mb-2 border-stone-400 border-solid border cursor-pointer
                                 hover:bg-stone-700/10 active:bg-white
                                 hover:dark:bg-white/10 active:dark:bg-stone-700">

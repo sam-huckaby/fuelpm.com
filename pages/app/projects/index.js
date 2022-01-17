@@ -46,7 +46,7 @@ export default function AllProjects(props) {
                         projects &&
                         projects.map(
                             (cur) => 
-                                <Link key={cur.name} href={`/app/p/${encodeURIComponent(cur.name)}`}>
+                                <Link key={cur.name} href={`/app/p/${cur.id}`}>
                                     <div className="flex flex-col justify-center items-center cursor-pointer
                                                     p-4 mt-2 border-stone-400 border-solid border
                                                     hover:bg-stone-700/10 active:bg-white

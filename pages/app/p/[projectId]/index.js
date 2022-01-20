@@ -97,7 +97,7 @@ export default function Project() {
                         {
                             (editing)?
                                 <input
-                                    className="bg-transparent rounded border-white border border-solid p-2"
+                                    className="bg-transparent rounded border-stone-700 dark:border-white border border-solid p-2 flex-auto"
                                     type="text"
                                     defaultValue={project.name}
                                     onChange={(e) => setNewName(e.target.value)}></input> :
@@ -105,20 +105,22 @@ export default function Project() {
                         }
                         {
                             (editing)?
-                            (
-                                <Dropdown title="Settings" items={[{label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-800'}]}></Dropdown>
-                            ) :
-                            <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
+                                '' :
+                                <Dropdown title="&#8943;" type="settings" items={[
+                                    { label: 'Edit', onClick: () => setEditing(true) },
+                                    { separator: true },
+                                    { label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-800', confirm: { title: 'Delete This Project', description: 'This will delete this project permanently along with all tasks, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
+                                ]}></Dropdown>
                         }
                     </div>
                     {
                         (editing)?
                             <textarea
-                                className="bg-transparent rounded border-white border border-solid p-2"
+                                className="bg-transparent rounded mt-2 border-stone-700 dark:border-white border border-solid p-2"
                                 defaultValue={project.description}
                                 rows={5}
                                 onChange={(e) => setNewDescription(e.target.value)} /> :
-                            <div className="text-sm">{project.description}</div>
+                            <div className="text-sm mt-2">{project.description}</div>
                     }
                     <div className="flex flex-row justify-end">
                         {
@@ -135,7 +137,7 @@ export default function Project() {
                         <span className="text-lg">Tasks</span>
                         <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col md:flex-row md:flex-wrap">
                         {renderTasks()}
                     </div>
                 </>
@@ -160,12 +162,14 @@ export default function Project() {
                         <Link key={cur.serial} href={`/app/p/${project?.id}/t/${cur.serial}`}>
                             <div className="flex flex-col py-4 px-2 mb-2 border-stone-400 border-solid border cursor-pointer
                                 hover:bg-stone-700/10 active:bg-white
-                                hover:dark:bg-white/10 active:dark:bg-stone-700">
-                                <div className="flex flex-row justify-between items-center">
+                                hover:dark:bg-white/10 active:dark:bg-stone-700
+                                
+                                md:mr-2 md:justify-start md:items-start md:h-60 md:w-64">
+                                <div className="flex flex-row md:w-full justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
                                     <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
-                                <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300">{cur.description}</span>
+                                <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300 md:line-clamp-6 md:w-full">{cur.description}</span>
                             </div>
                         </Link>
                     )}

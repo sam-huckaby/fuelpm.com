@@ -31,27 +31,32 @@ export default function AllProjects(props) {
     }, [])
 
     function renderProjects() {
-        if (projects.length < 1 && loading === true) {
+        if (projects?.length < 1 && loading === true) {
             return (
                 <></>
             );
-        } else if (projects.length < 1 && loading === false) {
+        } else if (projects?.length < 1 && loading === false) {
             return (
                 <div className="text-stone-400 flex flex-row justify-center items-center p-5">You Have No Projects</div>
             );
         } else {
             return (
-                <div className="flex flex-col">
+                <div className="flex flex-col md:flex-row">
                     {
                         projects &&
                         projects.map(
                             (cur) => 
                                 <Link key={cur.name} href={`/app/p/${cur.id}`}>
-                                    <div className="flex flex-col justify-center items-center cursor-pointer
+                                    <div className="
+                                                    flex flex-col justify-center items-center cursor-pointer
                                                     p-4 mt-2 border-stone-400 border-solid border
                                                     hover:bg-stone-700/10 active:bg-white
-                                                    hover:dark:bg-white/10 active:dark:bg-stone-700">
-                                        <div className="text-lg">{cur.name}</div>
+                                                    hover:dark:bg-white/10 active:dark:bg-stone-700
+                                                    
+                                                    md:mr-2 md:justify-start md:items-start md:h-60 md:w-64
+                                                    ">
+                                        <div className="text-lg font-bold">{cur.name}</div>
+                                        <p className="hidden md:line-clamp-6 mt-4">{cur.description}</p>
                                     </div>
                                 </Link>
                         )
@@ -77,10 +82,10 @@ export default function AllProjects(props) {
             </Head>
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
-            <div className="flex-auto flex flex-col p-2">
+            <div className="flex-auto p-2 flex flex-col">
                 <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-orange-600">
                     <span className="text-3xl text-orange-600 font-mono">Projects</span>
-                    <Link href="/app/projects/create"><button className={((projects.length < 5)? 'relative' : 'hidden') + ` text-xl p-2 border border-solid border-orange-600 rounded`}>&#43;&nbsp;Create</button></Link>
+                    <Link href="/app/projects/create"><button className={((projects?.length < 5)? 'relative' : 'hidden') + ` text-xl p-2 border border-solid border-orange-600 rounded`}>&#43;&nbsp;Create</button></Link>
                 </div>
                 <LoadingPane loading={loading}></LoadingPane>
                 {renderProjects()}

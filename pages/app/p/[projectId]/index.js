@@ -10,6 +10,7 @@ import AuthGuard from '../../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../components/common/LoadingPane';
 import Dropdown from '../../../../components/common/Dropdown';
+import Alert from '../../../../components/common/Alert';
 
 export default function Project() {
     // View state values
@@ -97,7 +98,7 @@ export default function Project() {
                         {
                             (editing)?
                                 <input
-                                    className="bg-transparent rounded border-white border border-solid p-2"
+                                    className="bg-transparent rounded border-stone-700 dark:border-white border border-solid p-2 flex-auto mr-2"
                                     type="text"
                                     defaultValue={project.name}
                                     onChange={(e) => setNewName(e.target.value)}></input> :
@@ -106,7 +107,9 @@ export default function Project() {
                         {
                             (editing)?
                             (
-                                <Dropdown title="Settings" items={[{label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-800'}]}></Dropdown>
+                                <Dropdown title="Settings" items={[
+                                    {label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-800'},
+                                ]}></Dropdown>
                             ) :
                             <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
                         }
@@ -114,11 +117,11 @@ export default function Project() {
                     {
                         (editing)?
                             <textarea
-                                className="bg-transparent rounded border-white border border-solid p-2"
+                                className="bg-transparent rounded mt-2 border-stone-700 dark:border-white border border-solid p-2"
                                 defaultValue={project.description}
                                 rows={5}
                                 onChange={(e) => setNewDescription(e.target.value)} /> :
-                            <div className="text-sm">{project.description}</div>
+                            <div className="text-sm mt-2">{project.description}</div>
                     }
                     <div className="flex flex-row justify-end">
                         {

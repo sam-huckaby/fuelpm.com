@@ -60,6 +60,10 @@ export function supabaseCaptureSSRCookie (req) {
 }
 
 export function textColorChoice(hexString) {
+    if (!hexString) {
+        return 'black';
+    }
+
     let noHash = hexString.substring(1);
     let result = parseInt(noHash, 16);
 

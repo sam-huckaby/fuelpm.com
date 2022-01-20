@@ -10,6 +10,7 @@ import AuthGuard from '../../../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../../components/common/LoadingPane';
 import Dropdown from '../../../../../components/common/Dropdown';
+import StateDropdown from '../../../../../components/common/StateDropdown';
 
 export default function Project() {
     // View state values
@@ -103,7 +104,7 @@ export default function Project() {
                         {
                             (editing)?
                                 <input
-                                    className="bg-transparent rounded border-white border border-solid p-2"
+                                    className="flex-auto bg-transparent rounded border-stone-700 dark:border-white border border-solid p-2"
                                     type="text"
                                     defaultValue={task.name}
                                     onChange={(e) => setNewName(e.target.value)}></input> :
@@ -111,14 +112,16 @@ export default function Project() {
                         }
                         {
                             (editing)?
-                            (
-                                <Dropdown title="Settings" items={[{label: 'Delete This Task', onClick: deleteThisTask, classes: 'text-red-800'}]}></Dropdown>
-                            ) :
-                            <button onClick={() => setEditing(true)} className="p-2 border-solid border border-stone-400 rounded">Edit</button>
+                                '' :
+                                <Dropdown title="&#8943;" type="settings" items={[
+                                    { label: 'Edit', onClick: () => setEditing(true) },
+                                    { separator: true },
+                                    { label: 'Delete This Task', onClick: deleteThisTask, classes: 'text-red-800', confirm: { title: 'Delete This Task', description: 'This will delete this task permanently, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
+                                ]}></Dropdown>
                         }
                     </div>
                     <div className="py-4 flex flex-row justify-between items-center">
-                        {
+                        {/* {
                             (editing)?
                             <select
                                 onChange={e => setNewState(e.target.value)}
@@ -132,6 +135,11 @@ export default function Project() {
                                 }
                             </select> :
                             <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{task.states.label}</span>
+                        } */}
+                        {
+                            (editing)?
+                            <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={false} updater={setNewState} /> :
+                            <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{task.states.label}</span>
                         }
                         <div className="flex flex-col justify-start items-start">
                             <span className="text-stone-500 dark:text-stone-300 text-xs">Last Updated</span>
@@ -141,7 +149,7 @@ export default function Project() {
                     {
                         (editing)?
                             <textarea
-                                className="bg-transparent rounded border-white border border-solid p-2"
+                                className="bg-transparent rounded border-stone-700 dark:border-white border border-solid p-2"
                                 defaultValue={task.description}
                                 rows={5}
                                 onChange={(e) => setNewDescription(e.target.value)} /> :

@@ -121,21 +121,6 @@ export default function Project() {
                         }
                     </div>
                     <div className="py-4 flex flex-row justify-between items-center">
-                        {/* {
-                            (editing)?
-                            <select
-                                onChange={e => setNewState(e.target.value)}
-                                defaultValue={task.states.id}
-                                className="rounded border border-solid border-orange-600 bg-transparent h-8">
-                                {
-                                    task.projects.states &&
-                                    task.projects.states.map((cur, index) => 
-                                        <option key={cur.label+'_'+cur.terminal} value={cur.id}>{cur.label}</option>
-                                    )
-                                }
-                            </select> :
-                            <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{task.states.label}</span>
-                        } */}
                         {
                             (editing)?
                             <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={false} updater={setNewState} /> :

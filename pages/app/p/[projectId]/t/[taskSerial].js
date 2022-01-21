@@ -123,7 +123,7 @@ export default function Project() {
                     <div className="py-4 flex flex-row justify-between items-center">
                         {
                             (editing)?
-                            <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={false} updater={setNewState} /> :
+                            <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={true} updater={setNewState} /> :
                             <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{task.states.label}</span>
                         }
                         <div className="flex flex-col justify-start items-start">

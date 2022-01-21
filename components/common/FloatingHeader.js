@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
+import { isMobile } from 'react-device-detect';
 
 import { supabase } from '../../utils/supabaseClient';
 
@@ -18,9 +19,10 @@ export default function FloatingHeader(props) {
             setLoggedIn(!!session);
         });
 
-        let scrollFn
+        let scrollFn;
+        let sizeFn;
 
-        if (typeof document !== undefined) {
+        if (typeof document !== undefined && typeof window !== undefined) {
             let scrollFunctionality = async () => {
                 // Reads out the scroll position and stores it in the data attribute
                 // so we can use it in our stylesheets
@@ -37,11 +39,33 @@ export default function FloatingHeader(props) {
                 storeScroll();
             };
             scrollFunctionality();
+
+            // Designed with help from:
+            // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+            let windowSize = async () => {
+                const storeHeight = () => {
+                    let vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                };
+                const debounce = (await import('../../utils/helpers')).debounce;
+                sizeFn = debounce(storeHeight);
+
+                window.addEventListener('resize', sizeFn, { passive: true });
+                
+                storeHeight();
+            }
+            windowSize();
         }
 
         return () => {
             // When the component is removed from view, stop listening for scroll
             document.removeEventListener('scroll', scrollFn);
+            window.removeEventListener('resize', sizeFn);
+            if (screen && screen.orientation) {
+                screen.orientation.removeEventListener('change', sizeFn);
+            } else {
+                window.removeEventListener('orientationchange', sizeFn);
+            }
             authListener.unsubscribe();
         }
     }, []);

@@ -1,27 +1,14 @@
-# Next.js + Tailwind CSS Example
+# Fuel PM
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## The Origin Story
+I'm sure there are a lot of good stories that could be written about how Fuel came into being, but in reality, I simply dreamed it up because I got a really good deal on a 6-letter .com domain.
 
-## Preview
+I wanted to make use of a new framework (since I work professionally with Angular and Node.js) and after some prompting by a friend I picked up NextJS and I have been hooked ever since. I've dabbled in React previously, but NextJS has really been great because it takes the routing complexity out while still letting me create powerful, dynamic components very quickly.
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+## The Concept
+The concept behind Fuel PM is "Linear Project Management", which basically means that projects must be completed in a designated order. This seems strange at first, but when you think about it, all projects are always completed in a specific order, however most project management tools give us the illusion of finishing many things at once simply because they allow us to complete tasks as we want. I have found, however, that choice is the enemy of efficiency. By forcing a user to designate the order they will complete tasks, it prevents getting sidetracked and essentially ensures that a user thinks through the steps of their project before committing to everything.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+I believe this concept can be leveraged in almost all professions, which means that this app is useful by all people. I do believe that software developers benefit the most from this idea, because current project management tools (and some methodologies...) create boundless opportunities for focus-shifting, which inhibits productivity.
 
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## The Path Forward
+I will continue to iterate on this idea for the foreseeable future. If enough external users sign up, I will enable paid plans that allow for unlimited projects and members. Right now, I cannot offer unlimited because that would commercialize my app and would require me to upgrade to a paid Vercel plan (something I hope to do eventually, just not yet).

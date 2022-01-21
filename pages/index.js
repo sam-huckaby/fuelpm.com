@@ -107,11 +107,11 @@ export default function Home() {
         <link rel="icon" href="/Fuel-Favicon.svg" />
       </Head>
 
-      <div className="fuel-bigscreen-container h-screen w-screen flex flex-col bg-orange-600">
+      <div className="h-screen w-screen flex flex-col bg-orange-600">
         <FloatingHeader noTopbranding="true"></FloatingHeader>
         <div className="fuel-bigscreen flex-auto flex flex-col justify-center items-center">
           <div className="w-screen flex flex-row justify-center items-center">
-            <Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={380} height={250}/>
+            <Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={380} height={250} />
           </div>
           <span className="text-black">Keep your projects running on full.</span>
         </div>

@@ -11,12 +11,14 @@ import FloatingHeader from '../../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../../components/common/LoadingPane';
 import Dropdown from '../../../../../components/common/Dropdown';
 import StateDropdown from '../../../../../components/common/StateDropdown';
+import HelpText from '../../../../../components/common/HelpText';
 
 export default function Project() {
     // View state values
     const [task, setTask] = useState(null);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [nextTerminal, setNextTerminal] = useState(1)
 
     // Data editing values
     const [newName, setNewName] = useState('');
@@ -40,6 +42,22 @@ export default function Project() {
             .eq('project_id', router.query.projectId);
 
         if (error) throw error;
+
+        // Retrieve the serial of the only task that can be made terminal in this project
+        try {
+            let { data, error } = await supabase
+                .rpc('next_terminal', { task_project_id: parseInt(router.query.projectId, 10) });
+                
+            if (error) throw error;
+
+            if (!data) {
+                setNextTerminal(1);
+            } else {
+                setNextTerminal(parseInt(data, 10));
+            }
+        } catch (e) {
+            console.log(e);
+        }
         
         if (tasks.length === 0) {
             setTask({
@@ -58,6 +76,11 @@ export default function Project() {
     }
 
     async function saveTaskEdits() {
+        // IF this task is already terminal, do not allow edits
+        if (nextTerminal > task.serial) {
+            return;
+        }
+
         const { data, error } = await supabase
             .from('tasks')
             .update({
@@ -77,7 +100,10 @@ export default function Project() {
     }
 
     async function deleteThisTask() {
-        console.log('OH NO! YOU KILLED THE TASK!');
+        // IF this task is already terminal, do not allow edits
+        if (nextTerminal > task.serial) {
+            return;
+        }
 
         // Call Supabase to remove this task
         const { data, error } = await supabase
@@ -116,15 +142,19 @@ export default function Project() {
                                 <Dropdown title="&#8943;" type="settings" items={[
                                     { label: 'Edit', onClick: () => setEditing(true) },
                                     { separator: true },
-                                    { label: 'Delete This Task', onClick: deleteThisTask, classes: 'text-red-800', confirm: { title: 'Delete This Task', description: 'This will delete this task permanently, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
+                                    { label: 'Delete This Task', onClick: deleteThisTask, classes: 'text-red-600', confirm: { title: 'Delete This Task', description: 'This will delete this task permanently, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
                                 ]}></Dropdown>
                         }
                     </div>
                     <div className="py-4 flex flex-row justify-between items-center">
                         {
-                            (editing)?
-                            <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={true} updater={setNewState} /> :
-                            <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{task.states.label}</span>
+                            // Only allow them to edit the state if it is the most recent terminal task or an unfinished on
+                            (editing && task.serial >= (nextTerminal-1))?
+                                <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={nextTerminal === task.serial} updater={setNewState} /> :
+                                <div className="flex flex-row items-center">
+                                    <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1 mr-2">{task.states.label}</span>
+                                    {(editing && task.serial < (nextTerminal-1))? <HelpText text="Why can't I change this?" description="This status cannot be changed because it is not the most recently completed task and is already in a terminal status. Let's face it: the work has been done and the task closed out. If you need to do more on this particular task you should consider creating a new task, that way it maintains the history of your work."></HelpText> : ''}
+                                </div>
                         }
                         <div className="flex flex-col justify-start items-start">
                             <span className="text-stone-500 dark:text-stone-300 text-xs">Last Updated</span>

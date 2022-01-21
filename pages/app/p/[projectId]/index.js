@@ -109,7 +109,7 @@ export default function Project() {
                                 <Dropdown title="&#8943;" type="settings" items={[
                                     { label: 'Edit', onClick: () => setEditing(true) },
                                     { separator: true },
-                                    { label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-800', confirm: { title: 'Delete This Project', description: 'This will delete this project permanently along with all tasks, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
+                                    { label: 'Delete This Project', onClick: deleteThisProject, classes: 'text-red-600', confirm: { title: 'Delete This Project', description: 'This will delete this project permanently along with all tasks, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
                                 ]}></Dropdown>
                         }
                     </div>

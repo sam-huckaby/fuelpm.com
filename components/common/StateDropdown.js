@@ -38,7 +38,7 @@ export default function StateDropdown(props) {
         <>
             <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
-                    <button style={{backgroundColor: current.color, color: textColorChoice(current.color)}} className="p-2 border-solid border border-stone-400 rounded">{ current.label } <span className="font-bold">&#8744;</span></button>
+                    <button style={{backgroundColor: current.color, color: textColorChoice(current.color)}} className="p-2 border-solid border border-stone-400 rounded flex flex-row items-center">{ current.label } <span className="ml-2 inline-block w-2 h-2 rotate-45 border-r border-b border-black border-solid">&nbsp;</span></button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content className="right-0 py-2 mt-2 bg-white rounded-md shadow-2xl w-44 border border-solid border-stone-700">
                     {

@@ -56,10 +56,10 @@ export default function LoginForm() {
             </div>
             <span className="text-lg font-bold text-center px-4">Login</span>
             <span className="text-sm text-stone-400 font-bold text-center px-4 mb-4">(if you don't have an account, we will automatically create one for you)</span>
-            <div className="flex flex-col px-4 bg-neutral-100">
+            <div className="flex flex-col px-4">
                 <input className="rounded bg-transparent w-full border-solid border-stone-400 border p-2 mb-2 invalid:border-red-600" type="email" name="fuelEmail" onChange={(event) => setFuelEmail(event.target.value)} onKeyPress={handleEnter} placeholder="E-Mail" />
             </div>
-            <div className="flex flex-col pb-4 px-4 bg-neutral-100">
+            <div className="flex flex-col pb-4 px-4">
                 <button className="bg-orange-600 hover:bg-orange-700 rounded p-2 text-white disabled:text-stone-700 disabled:bg-stone-700" disabled={loggingIn} onClick={login}>Login</button>
             </div>
         </div>

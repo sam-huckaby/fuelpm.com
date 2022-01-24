@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
+import * as Switch from '@radix-ui/react-switch';
 
 import { supabase } from "../../../../utils/supabaseClient";
 import { textColorChoice } from '../../../../utils/helpers';
@@ -11,11 +12,14 @@ import FloatingHeader from '../../../../components/common/FloatingHeader';
 import LoadingPane from '../../../../components/common/LoadingPane';
 import Dropdown from '../../../../components/common/Dropdown';
 
+import styles from '../../../../styles/app/ProjectDetail.module.scss';
+
 export default function Project() {
     // View state values
     const [project, setProject] = useState(null);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [viewTerminal, setViewTerminal] = useState(false);
 
     // Project state values
     const [newName, setNewName] = useState('');
@@ -135,7 +139,16 @@ export default function Project() {
                     </div>
                     <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                         <span className="text-lg">Tasks</span>
-                        <button onClick={() => addTask()} className="p-2 border-solid border border-stone-400 rounded">+ Add</button>
+                        <div className="flex flex-row">
+                            <Switch.Root onCheckedChange={(checked) => setViewTerminal(checked)} className={`${styles['terminal-toggle']} rounded-full w-[50px] h-[31px] p-0 bg-white dark:bg-stone-700 border border-solid border-stone-800`}>
+                                <Switch.Thumb className={`${styles['terminal-toggle-thumb']} rounded-full h-[25px] w-[25px] block bg-stone-700 dark:bg-white translate-x-[2px] transition-transform`} />
+                            </Switch.Root>
+                            <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center text-xs ml-2">
+                                <span>Show Completed</span>
+                                <span className="sm:ml-1">Tasks</span>
+                            </div>
+                        </div>
+                        <button onClick={() => addTask()} className="p-0 border-solid border border-stone-400 rounded-full flex flex-col justify-center items-center h-8 w-8">&#43;</button>
                     </div>
                     <div className="flex flex-col md:flex-row md:flex-wrap">
                         {renderTasks()}
@@ -160,15 +173,17 @@ export default function Project() {
                 <>
                     {project?.tasks.map((cur) => 
                         <Link key={cur.serial} href={`/app/p/${project?.id}/t/${cur.serial}`}>
-                            <div className="flex flex-col py-4 px-2 mb-2 border-stone-400 border-solid border cursor-pointer
+                            <div className={((!cur.states.terminal || viewTerminal)? 'flex' : 'hidden') + ` flex-col
+                                py-4 px-2 mb-2 border-stone-400 border-solid border cursor-pointer transition-opacity
                                 hover:bg-stone-700/10 active:bg-white
                                 hover:dark:bg-white/10 active:dark:bg-stone-700
                                 
-                                md:mr-2 md:justify-start md:items-start md:h-60 md:w-64">
+                                md:mr-2 md:justify-start md:items-start md:h-60 md:w-64`}>
                                 <div className="flex flex-row md:w-full justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
                                     <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
+                                {(!cur.states.terminal || viewTerminal).toString()}
                                 <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300 md:line-clamp-6 md:w-full">{cur.description}</span>
                             </div>
                         </Link>

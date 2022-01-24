@@ -1,0 +1,11 @@
+.terminal-toggle {
+    &[data-state="checked"] {
+        @apply bg-orange-600
+    }
+
+    .terminal-toggle-thumb {
+        &[data-state="checked"] {
+            transform: translateX(21px);
+        }
+    }
+}

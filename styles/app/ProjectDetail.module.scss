@@ -1,6 +1,6 @@
 .terminal-toggle {
     &[data-state="checked"] {
-        @apply bg-orange-600
+        @apply bg-orange-600/50
     }
 
     .terminal-toggle-thumb {

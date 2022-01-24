@@ -11,7 +11,7 @@ export default function HelpText(props) {
                     <button onClick={() => setOpen(true)} className="rounded-full border border-solid border-stone-400 w-8 h-8 text-xl flex flex-row justify-center items-center text-stone-400">&#63;</button>
                 </Tooltip.Trigger>
                 <Tooltip.Content className="rounded bg-white border border-solid border-black py-[10px] px-[15px] shadow-lg max-w-[300px]">
-                    <Tooltip.Arrow />
+                    <Tooltip.Arrow offset={10} />
                     <p>{ props.description }</p>
                     <div className="flex flex-row justify-end">
                         <button onClick={() => {setOpen(false)}}>Okay</button>

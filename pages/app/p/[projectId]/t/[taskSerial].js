@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -125,7 +126,7 @@ export default function Project() {
             return <div>Sorry! That task doesn't seem to exist.</div>;
         } else {
             return (
-                <>
+                <div className="flex-auto flex flex-col">
                     <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
                         {
                             (editing)?
@@ -153,7 +154,7 @@ export default function Project() {
                                 <StateDropdown taskState={task.states} projectStates={task.projects.states} allowTerminal={nextTerminal === task.serial} updater={setNewState} /> :
                                 <div className="flex flex-row items-center">
                                     <span style={{backgroundColor: task.states.color, color: textColorChoice(task.states.color)}} className="text-ellipsis overflow-hidden whitespace-nowrap text-center p-1 mr-2">{task.states.label}</span>
-                                    {(editing && task.serial < (nextTerminal-1))? <HelpText text="Why can't I change this?" description="This status cannot be changed because it is not the most recently completed task and is already in a terminal status. Let's face it: the work has been done and the task closed out. If you need to do more on this particular task you should consider creating a new task, that way it maintains the history of your work."></HelpText> : ''}
+                                    {(editing && task.serial < (nextTerminal-1))? <HelpText text="Why can't I change this?" description="This status cannot be changed because it is not the most recently completed task and is already in a terminal status. If you need to do more for this task you should consider creating a new task, that way it maintains the history of your work."></HelpText> : ''}
                                 </div>
                         }
                         <div className="flex flex-col justify-start items-start">
@@ -164,24 +165,24 @@ export default function Project() {
                     {
                         (editing)?
                             <textarea
-                                className="bg-transparent rounded border-stone-700 dark:border-white border border-solid p-2"
+                                className="flex-auto bg-transparent rounded border-stone-700 dark:border-white border border-solid p-2 whitespace-pre-wrap"
                                 defaultValue={task.description}
                                 rows={5}
                                 onChange={(e) => setNewDescription(e.target.value)} /> :
-                            <div className="text-sm">{task.description}</div>
+                            <ReactMarkdown className="prose prose-stone dark:prose-invert">{task.description}</ReactMarkdown>
                     }
-                    <div className="flex flex-row justify-end">
+                    <div className={((!editing)? 'hidden' : '') + ` mt-2 dark:bg-stone-700 p-2 flex flex-row items-end justify-between border-t border-solid border-orange-600`}>
                         {
                             (editing)?
                             (
                                 <>
-                                    <button onClick={() => setEditing(false)} className="my-2 p-2 border-solid border border-stone-400 rounded">Cancel</button>
-                                    <button onClick={saveTaskEdits} className="ml-4 my-2 p-2 border-solid border border-stone-400 rounded">Save</button>
+                                    <button onClick={() => setEditing(false)} className="text-xl p-2 border border-solid border-stone-300 text-black dark:text-white rounded">Cancel</button>
+                                    <button onClick={saveTaskEdits} className="text-xl p-2 border border-solid border-orange-600 text-black dark:text-white rounded">Save</button>
                                 </>
                             ) : <></>
                         }
                     </div>
-                </>
+                </div>
             );
         }
     }
@@ -201,8 +202,8 @@ export default function Project() {
             </Head>
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
-            <div className="flex-auto flex flex-col p-3">
-                <div className="mb-1">
+            <div className="flex-auto flex flex-col p-2">
+                <div className={((editing)? 'hidden' : '') + ` mb-1`}>
                     <Link href={`/app/p/${router.query.projectId}`}>
                         <span className="pb-1 cursor-pointer border-b border-solid border-stone-700 dark:border-white">&#8249; Back to {task?.projects?.name}</span>
                     </Link>

@@ -108,7 +108,7 @@ export default function CreateTask() {
             return <></>;
         } else {
             return (
-                <>
+                <div className="flex flex-col flex-auto">
                     <div className="flex flex-col pt-3">
                         <label htmlFor="project_name">Name</label>
                         <input
@@ -118,16 +118,6 @@ export default function CreateTask() {
                             type="text"
                             name="name"
                             id="project_name" />
-                    </div>
-                    <div className="flex flex-col pt-3">
-                        <label htmlFor="project_description">Description</label>
-                        <textarea 
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                            className="rounded border border-solid border-orange-600 bg-transparent h-8"
-                            name="description"
-                            rows="3"
-                            id="project_description"></textarea>
                     </div>
                     <div className="flex flex-row items-end pt-3">
                         <div className="flex flex-col flex-auto">
@@ -145,7 +135,17 @@ export default function CreateTask() {
                             </select>
                         </div>
                     </div>
-                </>
+                    <div className="flex-auto flex flex-col pt-3">
+                        <label htmlFor="project_description">Description</label>
+                        <textarea 
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                            className="flex-auto rounded border border-solid border-orange-600 bg-transparent h-8 p-2"
+                            name="description"
+                            rows="3"
+                            id="project_description"></textarea>
+                    </div>
+                </div>
             );
         }
     }

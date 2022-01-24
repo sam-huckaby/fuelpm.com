@@ -169,7 +169,7 @@ export default function Project() {
                                 defaultValue={task.description}
                                 rows={5}
                                 onChange={(e) => setNewDescription(e.target.value)} /> :
-                            <ReactMarkdown className="prose prose-stone dark:prose-invert">{task.description}</ReactMarkdown>
+                            <ReactMarkdown className="prose prose-stone dark:prose-invert lg:max-w-none">{task.description}</ReactMarkdown>
                     }
                     <div className={((!editing)? 'hidden' : '') + ` mt-2 dark:bg-stone-700 p-2 flex flex-row items-end justify-between border-t border-solid border-orange-600`}>
                         {

@@ -140,7 +140,7 @@ export default function Project() {
                     <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                         <span className="text-lg">Tasks</span>
                         <div className="flex flex-row sm:ml-4">
-                            <Switch.Root onCheckedChange={(checked) => setViewTerminal(checked)} className={`${styles['terminal-toggle']} rounded-full w-[50px] h-[31px] p-0 bg-white dark:bg-stone-700 border border-solid border-stone-800`}>
+                            <Switch.Root onCheckedChange={(checked) => setViewTerminal(checked)} className={`${styles['terminal-toggle']} rounded-full w-[50px] h-[31px] p-0 bg-white dark:bg-stone-700 border-2 border-solid border-stone-800`}>
                                 <Switch.Thumb className={`${styles['terminal-toggle-thumb']} rounded-full h-[25px] w-[25px] block bg-stone-700 dark:bg-white translate-x-[2px] transition-transform`} />
                             </Switch.Root>
                             <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center text-xs ml-2">

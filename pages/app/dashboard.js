@@ -53,11 +53,11 @@ export default function Dashboard() {
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-2">
                 <span className="text-2xl font-bold mb-2">Next Steps</span>
-                <span className="italic mb-2">Get a look at the tasks that are next in your projects, and dive back in where you can get the most done.</span>
+                <span className="italic mb-4">Get a look at the tasks that are next in your projects, and dive back in where you can get the most done.</span>
                 {
                     nextTasks &&
                     nextTasks.map((cur, index) => 
-                        <div key={index} className="flex flex-col border border-solid border-stone-400 p-2 mb-2">
+                        <div key={index} className="flex flex-col border-2 border-solid border-orange-600 p-2 mb-4">
                             <div className="text-sm">{cur.project_name}</div>
                             <div className="flex flex-row justify-between pb-2 border-b border-solid border-stone-400">
                                 <div className="font-bold">{cur.task_name}</div>
@@ -70,10 +70,10 @@ export default function Dashboard() {
                             </div>
                             <div className="flex flex-row space-between mt-2">
                                 <Link href={`/app/p/${cur.project_id}/t/${cur.task_serial}`}>
-                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 mr-1">View Task</button>
+                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 dark:border-white mr-1">View Task</button>
                                 </Link>
                                 <Link href={`/app/p/${cur.project_id}`}>
-                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 ml-1">View Project</button>
+                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 dark:border-white ml-1">View Project</button>
                                 </Link>
                             </div>
                         </div>

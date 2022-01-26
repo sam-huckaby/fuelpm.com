@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-import { GoogleLogin } from 'react-google-login';
 import * as Separator from '@radix-ui/react-separator';
 
 import { supabase } from '../../utils/supabaseClient';

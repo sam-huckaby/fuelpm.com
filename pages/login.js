@@ -17,6 +17,7 @@ export default function Login() {
                     content="Login and get some work done on your projects."
                 />
                 <link rel="icon" href="/Fuel-Favicon.svg" />
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
             </Head>
             <AuthGuard></AuthGuard>
             <LoginForm></LoginForm>

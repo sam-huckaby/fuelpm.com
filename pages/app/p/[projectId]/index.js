@@ -139,7 +139,7 @@ export default function Project() {
                     </div>
                     <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold">
                         <span className="text-lg">Tasks</span>
-                        <div className="flex flex-row">
+                        <div className="flex flex-row sm:ml-4">
                             <Switch.Root onCheckedChange={(checked) => setViewTerminal(checked)} className={`${styles['terminal-toggle']} rounded-full w-[50px] h-[31px] p-0 bg-white dark:bg-stone-700 border border-solid border-stone-800`}>
                                 <Switch.Thumb className={`${styles['terminal-toggle-thumb']} rounded-full h-[25px] w-[25px] block bg-stone-700 dark:bg-white translate-x-[2px] transition-transform`} />
                             </Switch.Root>
@@ -148,6 +148,7 @@ export default function Project() {
                                 <span className="sm:ml-1">Tasks</span>
                             </div>
                         </div>
+                        <div className="hidden sm:block sm:flex-auto">&nbsp;</div>
                         <button onClick={() => addTask()} className="p-0 border-solid border border-stone-400 rounded-full flex flex-col justify-center items-center h-8 w-8">&#43;</button>
                     </div>
                     <div className="flex flex-col md:flex-row md:flex-wrap">
@@ -183,7 +184,6 @@ export default function Project() {
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
                                     <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
-                                {(!cur.states.terminal || viewTerminal).toString()}
                                 <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300 md:line-clamp-6 md:w-full">{cur.description}</span>
                             </div>
                         </Link>

@@ -111,7 +111,7 @@ export default function FloatingHeader(props) {
             <div className={`${styles['fuel-menu-row']} bg-orange-600 top-0 right-0 left-0 h-[60px] w-full box-border flex flex-row items-center`}> 
                 <div className={((props.noTopbranding)? 'hidden' : '') + ` ${styles['fuel-header-logo-container']} text-black flex flex-row pl-3 items-center text-4xl font-mono`}>
                     <Link href="/app/dashboard">
-                        <a className="flex flex-row items-center"><Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={100} height={50}/></a>
+                        <a className="flex flex-row items-center mt-1"><Image src="/Fuel-Logo-Full.svg" alt="FuelPM" width={100} height={50}/></a>
                     </Link>
                 </div> 
                 <div className="flex-auto">&nbsp;</div>

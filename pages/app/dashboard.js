@@ -36,6 +36,7 @@ export default function Dashboard() {
         }
 
         // TEMPORARY - REMOVE AFTER INVESTIGATION
+        console.log(supabase?.auth);
         console.log(supabase?.auth?.currentSession);
         if (supabase?.auth?.currentSession) {
             fetchNextTasks();

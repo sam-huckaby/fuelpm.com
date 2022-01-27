@@ -14,6 +14,13 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Keep track of the user's session, and if it ends, redirect the user dynamically
+        const { data: authListener } = supabase.auth.onAuthStateChange((_event, _session) => {
+            if (_session) {
+                fetchNextTasks();
+            }
+        });
+        
         const fetchNextTasks = async () => {
             setLoading(true);
             // Retrieve the serial of the only task that can be made terminal in this project
@@ -35,11 +42,15 @@ export default function Dashboard() {
             }
         }
 
-        // TEMPORARY - REMOVE AFTER INVESTIGATION
-        console.log(supabase?.auth);
-        console.log(supabase?.auth?.currentSession);
+        // // TEMPORARY - REMOVE AFTER INVESTIGATION
+        // console.log(supabase?.auth);
+        // console.log(supabase?.auth?.currentSession);
         if (supabase?.auth?.currentSession) {
             fetchNextTasks();
+        }
+
+        return () => {
+            authListener.unsubscribe();
         }
     }, [supabase?.auth?.currentSession]);
 

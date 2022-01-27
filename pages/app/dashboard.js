@@ -7,6 +7,7 @@ import { textColorChoice } from '../../utils/helpers';
 
 import AuthGuard from '../../components/auth/AuthGuard';
 import FloatingHeader from '../../components/common/FloatingHeader';
+import LoadingPane from '../../components/common/LoadingPane';
 
 export default function Dashboard() {
     const [nextTasks, setNextTasks] = useState([]);
@@ -14,6 +15,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         const fetchNextTasks = async () => {
+            setLoading(true);
             // Retrieve the serial of the only task that can be made terminal in this project
             try {
                 let { data, error } = await supabase
@@ -32,8 +34,11 @@ export default function Dashboard() {
                 setLoading(false);
             }
         }
-        fetchNextTasks();
-    }, []);
+
+        if (supabase?.auth?.currentSession) {
+            fetchNextTasks();
+        }
+    }, [supabase?.auth?.currentSession]);
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -52,6 +57,7 @@ export default function Dashboard() {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-2">
+                <LoadingPane loading={loading}></LoadingPane>
                 <span className="text-2xl font-bold mb-2">Next Steps</span>
                 <span className="italic mb-4">Get a look at the tasks that are next in your projects, and dive back in where you can get the most done.</span>
                 {

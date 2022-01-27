@@ -14,10 +14,6 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // TEMPORARY - REMOVE AFTER INVESTIGATION
-        console.log(supabase?.auth);
-
-        
         const fetchNextTasks = async () => {
             setLoading(true);
             // Retrieve the serial of the only task that can be made terminal in this project
@@ -39,6 +35,8 @@ export default function Dashboard() {
             }
         }
 
+        // TEMPORARY - REMOVE AFTER INVESTIGATION
+        console.log(supabase?.auth?.currentSession);
         if (supabase?.auth?.currentSession) {
             fetchNextTasks();
         }

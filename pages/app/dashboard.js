@@ -14,7 +14,8 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Keep track of the user's session, and if it ends, redirect the user dynamically
+        // If the user's session changes, fetch the dashboards if they are logged in after the change
+        // This fixed Google auth users from getting a persistent loading veil.
         const { data: authListener } = supabase.auth.onAuthStateChange((_event, _session) => {
             if (_session) {
                 fetchNextTasks();
@@ -42,9 +43,7 @@ export default function Dashboard() {
             }
         }
 
-        // // TEMPORARY - REMOVE AFTER INVESTIGATION
-        // console.log(supabase?.auth);
-        // console.log(supabase?.auth?.currentSession);
+        // If the user is already logged in, just fetch and display the dashboards
         if (supabase?.auth?.currentSession) {
             fetchNextTasks();
         }

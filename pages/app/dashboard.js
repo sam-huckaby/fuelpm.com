@@ -82,7 +82,7 @@ export default function Dashboard() {
                 }
             </div>;
         } else {
-            return <div className="flex flex-row justify-center items-center">There's nothing for you to do right now!</div>
+            return <div className="flex flex-row justify-center items-center border border-solid border-orange-600 p-2 md:h-48">There's nothing for you to do right now!</div>
         }
     }
 

@@ -53,6 +53,39 @@ export default function Dashboard() {
         }
     }, [supabase?.auth?.currentSession]);
 
+    function renderNextSteps() {
+        if (nextTasks?.length > 0) {
+            return <div className="flex flex-col md:flex-row md:flex-wrap">
+                {
+                    nextTasks.map((cur, index) => 
+                        <div key={index} className="flex flex-col md:w-96 md:h-48 md:mr-4 border-2 border-solid border-orange-600 p-2 mb-4">
+                            <div className="text-sm">{cur.project_name}</div>
+                            <div className="flex flex-row justify-between pb-2 border-b border-solid border-stone-400">
+                                <div className="font-bold">{cur.task_name}</div>
+                                <div className="font-bold">
+                                    <span style={{backgroundColor: cur.task_state_color, color: textColorChoice(cur.task_state_color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.task_state_label}</span>
+                                </div>
+                            </div>
+                            <div className="flex-auto p-2 line-clamp-2">
+                                {cur.task_description}
+                            </div>
+                            <div className="flex flex-row space-between mt-2">
+                                <Link href={`/app/p/${cur.project_id}/t/${cur.task_serial}`}>
+                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 dark:border-white mr-1">View Task</button>
+                                </Link>
+                                <Link href={`/app/p/${cur.project_id}`}>
+                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 dark:border-white ml-1">View Project</button>
+                                </Link>
+                            </div>
+                        </div>
+                    )
+                }
+            </div>;
+        } else {
+            return <div className="flex flex-row justify-center items-center">There's nothing for you to do right now!</div>
+        }
+    }
+
     return (
         <div className="flex flex-col min-h-screen">
             <Head>
@@ -73,31 +106,7 @@ export default function Dashboard() {
                 <LoadingPane loading={loading}></LoadingPane>
                 <span className="text-2xl font-bold mb-2">Next Steps</span>
                 <span className="italic mb-4">Get a look at the tasks that are next in your projects, and dive back in where you can get the most done.</span>
-                {
-                    nextTasks &&
-                    nextTasks.map((cur, index) => 
-                        <div key={index} className="flex flex-col border-2 border-solid border-orange-600 p-2 mb-4">
-                            <div className="text-sm">{cur.project_name}</div>
-                            <div className="flex flex-row justify-between pb-2 border-b border-solid border-stone-400">
-                                <div className="font-bold">{cur.task_name}</div>
-                                <div className="font-bold">
-                                    <span style={{backgroundColor: cur.task_state_color, color: textColorChoice(cur.task_state_color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.task_state_label}</span>
-                                </div>
-                            </div>
-                            <div className="p-2 line-clamp-2">
-                                {cur.task_description}
-                            </div>
-                            <div className="flex flex-row space-between mt-2">
-                                <Link href={`/app/p/${cur.project_id}/t/${cur.task_serial}`}>
-                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 dark:border-white mr-1">View Task</button>
-                                </Link>
-                                <Link href={`/app/p/${cur.project_id}`}>
-                                    <button className="flex-auto basis-2/4 p-4 border border-solid border-stone-700 dark:border-white ml-1">View Project</button>
-                                </Link>
-                            </div>
-                        </div>
-                    )
-                }
+                { renderNextSteps() }
             </div>
         </div>
     );

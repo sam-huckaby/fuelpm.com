@@ -126,9 +126,9 @@ export default function FloatingHeader(props) {
                 <Link href="/login"><button className={((loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Get Started / Login</button></Link>
                 {/* END logged-out buttons */}
                 {/* BEGIN logged-in buttons */}
-                <Link href="/app/dashboard"><button className={((!loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Dashboard</button></Link>
-                <Link href="/app/projects"><button className={((!loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Projects</button></Link>
-                <Link href="/app/settings"><button className={((!loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 active:bg-white text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Settings</button></Link>
+                <Link href="/app/dashboard"><button onClick={() => setMenuOpen(!menuOpen)} className={((!loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Dashboard</button></Link>
+                <Link href="/app/projects"><button onClick={() => setMenuOpen(!menuOpen)} className={((!loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Projects</button></Link>
+                <Link href="/app/settings"><button onClick={() => setMenuOpen(!menuOpen)} className={((!loggedIn)? 'hidden' : '') + ` p-5 hover:bg-white/50 text-white border-orange-700 border-solid border-b border-t-0 border-r-0 border-l-0 rounded-none`}>Settings</button></Link>
                 {/* END logged-in buttons */}
                 {/* Spacer to push the logout button to the bottom of the menu */}
                 <div className="flex-auto">&nbsp;</div>

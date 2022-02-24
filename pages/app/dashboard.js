@@ -7,7 +7,6 @@ import { textColorChoice } from '../../utils/helpers';
 
 import AuthGuard from '../../components/auth/AuthGuard';
 import FloatingHeader from '../../components/common/FloatingHeader';
-import LoadingPane from '../../components/common/LoadingPane';
 
 export default function Dashboard() {
     const [nextTasks, setNextTasks] = useState([]);
@@ -54,7 +53,62 @@ export default function Dashboard() {
     }, [supabase?.auth?.currentSession]);
 
     function renderNextSteps() {
-        if (nextTasks?.length > 0) {
+        if (loading) {
+            return (
+                <div className="flex flex-col md:flex-row md:flex-wrap">
+                    <div className="flex flex-col md:w-96 md:h-48 md:mr-4 border-2 border-solid border-gray-300 p-2 mb-4 animate-pulse">
+                        <div className="text-sm bg-gray-300">
+                            <span className="block">&nbsp;</span>
+                        </div>
+                        <div className="flex flex-row justify-between pb-2 border-b border-solid border-gray-300">
+                            <div className="font-bold flex-auto mt-1 bg-gray-300">
+                                <span className="block">&nbsp;</span>
+                            </div>
+                            <div className="font-bold w-20 ml-4 mt-1 bg-gray-300">
+                                <span className="block">&nbsp;</span>
+                            </div>
+                        </div>
+                        <div className="flex-auto p-2 line-clamp-2 mt-1 bg-gray-300">
+                            <span className="block">&nbsp;</span>
+                            <span className="block">&nbsp;</span>
+                        </div>
+                        <div className="flex flex-row space-between mt-2">
+                            <button className="flex-auto basis-2/4 p-4 border border-solid border-gray-300 dark:border-white mr-1">
+                                <span className="bg-gray-300 block">&nbsp;</span>
+                            </button>
+                            <button className="flex-auto basis-2/4 p-4 border border-solid border-gray-300 dark:border-white ml-1">
+                                <span className="bg-gray-300 block">&nbsp;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex flex-col md:w-96 md:h-48 md:mr-4 border-2 border-solid border-gray-300 p-2 mb-4 animate-pulse">
+                        <div className="text-sm bg-gray-300">
+                            <span className="block">&nbsp;</span>
+                        </div>
+                        <div className="flex flex-row justify-between pb-2 border-b border-solid border-gray-300">
+                            <div className="font-bold flex-auto mt-1 bg-gray-300">
+                                <span className="block">&nbsp;</span>
+                            </div>
+                            <div className="font-bold w-20 ml-4 mt-1 bg-gray-300">
+                                <span className="block">&nbsp;</span>
+                            </div>
+                        </div>
+                        <div className="flex-auto p-2 line-clamp-2 mt-1 bg-gray-300">
+                            <span className="block">&nbsp;</span>
+                            <span className="block">&nbsp;</span>
+                        </div>
+                        <div className="flex flex-row space-between mt-2">
+                            <button className="flex-auto basis-2/4 p-4 border border-solid border-gray-300 dark:border-white mr-1">
+                                <span className="bg-gray-300 block">&nbsp;</span>
+                            </button>
+                            <button className="flex-auto basis-2/4 p-4 border border-solid border-gray-300 dark:border-white ml-1">
+                                <span className="bg-gray-300 block">&nbsp;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if (nextTasks?.length > 0) {
             return <div className="flex flex-col md:flex-row md:flex-wrap">
                 {
                     nextTasks.map((cur, index) => 
@@ -103,7 +157,6 @@ export default function Dashboard() {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-2">
-                <LoadingPane loading={loading}></LoadingPane>
                 <span className="text-2xl font-bold mb-2">Next Steps</span>
                 <span className="italic mb-4">Get a look at the tasks that are next in your projects, and dive back in where you can get the most done.</span>
                 { renderNextSteps() }

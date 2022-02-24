@@ -6,7 +6,6 @@ import { supabase } from "../../../utils/supabaseClient";
 
 import AuthGuard from '../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../components/common/FloatingHeader';
-import LoadingPane from '../../../components/common/LoadingPane';
 
 export default function AllProjects(props) {
     const [projects, setProjects] = useState([]);
@@ -33,7 +32,24 @@ export default function AllProjects(props) {
     function renderProjects() {
         if (projects?.length < 1 && loading === true) {
             return (
-                <></>
+                <div className="animate-pulse
+                                flex flex-col justify-center items-center cursor-pointer
+                                p-4 mt-2 border-stone-400 border-solid border
+                                hover:bg-stone-700/10 active:bg-white
+                                hover:dark:bg-white/10 active:dark:bg-stone-700
+                                
+                                md:mr-2 md:justify-start md:items-start md:h-60 md:w-64
+                                ">
+                    <div className="text-lg font-bold bg-gray-300 w-full">&nbsp;</div>
+                    <p className="hidden md:line-clamp-6 mt-4 bg-gray-300 w-full">
+                        <span className="block">&nbsp;</span>
+                        <span className="block">&nbsp;</span>
+                        <span className="block">&nbsp;</span>
+                        <span className="block">&nbsp;</span>
+                        <span className="block">&nbsp;</span>
+                        <span className="block">&nbsp;</span>
+                    </p>
+                </div>
             );
         } else if (projects?.length < 1 && loading === false) {
             return (
@@ -87,7 +103,6 @@ export default function AllProjects(props) {
                     <span className="text-3xl text-orange-600 font-mono">Projects</span>
                     <Link href="/app/projects/create"><button className={((projects?.length < 5)? 'relative' : 'hidden') + ` text-xl p-2 border border-solid border-orange-600 rounded`}>&#43;&nbsp;Create</button></Link>
                 </div>
-                <LoadingPane loading={loading}></LoadingPane>
                 {renderProjects()}
             </div>
         </div>

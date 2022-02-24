@@ -9,7 +9,6 @@ import { textColorChoice } from '../../../../utils/helpers';
 
 import AuthGuard from '../../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../../components/common/FloatingHeader';
-import LoadingPane from '../../../../components/common/LoadingPane';
 import Dropdown from '../../../../components/common/Dropdown';
 
 import styles from '../../../../styles/app/ProjectDetail.module.scss';
@@ -91,7 +90,43 @@ export default function Project() {
 
     function renderDetails() {
         if (loading) {
-            return <></>;
+            return (
+                <>
+                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid animate-pulse">
+                        <div className="text-3xl bg-gray-300 flex-auto">&nbsp;</div>
+                    </div>
+                    <div className="text-sm mt-2 bg-gray-300 animate-pulse">&nbsp;</div>
+                    <div className="flex flex-row justify-end">
+                        <></>
+                    </div>
+                    <div className="flex flex-row justify-between items-center mt-5 pb-2 mb-2 font-bold animate-pulse">
+                        <span className="text-lg bg-gray-300 flex-auto">&nbsp;</span>
+                        <span className="text-lg bg-gray-300 ml-2 flex-auto">&nbsp;</span>
+                        <span className="text-lg bg-gray-300 ml-2 flex-auto">&nbsp;</span>
+                    </div>
+                    <div className="flex flex-col md:flex-row md:flex-wrap animate-pulse">
+                        <div className={`flex flex-col
+                            py-4 px-2 mb-2 border-stone-400 border-solid border cursor-pointer transition-opacity
+                            hover:bg-stone-700/10 active:bg-white
+                            hover:dark:bg-white/10 active:dark:bg-stone-700
+                            
+                            md:mr-2 md:justify-start md:items-start md:h-60 md:w-64`}>
+                            <div className="flex flex-row md:w-full justify-between items-center">
+                                <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">&nbsp;</span>
+                                <span className="bg-gray-300 w-20">&nbsp;</span>
+                            </div>
+                            <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-gray-300 mt-2 dark:border-stone-300 md:line-clamp-6 md:w-full">
+                                <p className="bg-gray-300">&nbsp;</p>
+                                <p className="bg-gray-300">&nbsp;</p>
+                                <p className="bg-gray-300">&nbsp;</p>
+                                <p className="bg-gray-300">&nbsp;</p>
+                                <p className="bg-gray-300">&nbsp;</p>
+                                <p className="bg-gray-300">&nbsp;</p>
+                            </span>
+                        </div>
+                    </div>
+                </>
+            );
         } else if (project && project.notFound) {
             return <div>Sorry! That project doesn't seem to exist.</div>;
         } else {
@@ -213,7 +248,6 @@ export default function Project() {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto flex flex-col p-3">
-                <LoadingPane loading={loading}></LoadingPane>
                 { renderDetails() }
             </div>
         </div>

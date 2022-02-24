@@ -9,7 +9,6 @@ import { textColorChoice } from '../../../../../utils/helpers';
 
 import AuthGuard from '../../../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../../../components/common/FloatingHeader';
-import LoadingPane from '../../../../../components/common/LoadingPane';
 import Dropdown from '../../../../../components/common/Dropdown';
 import StateDropdown from '../../../../../components/common/StateDropdown';
 import HelpText from '../../../../../components/common/HelpText';
@@ -121,7 +120,24 @@ export default function Project() {
 
     function renderTaskDetails() {
         if (loading) {
-            return <></>;
+            return (
+                <div className="flex-auto flex flex-col animate-pulse">
+                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
+                        <div className="text-3xl bg-gray-300 w-full mt-1">&nbsp;</div>
+                    </div>
+                    <div className="py-4 flex flex-row justify-between items-center">
+                        <span className="block bg-gray-300 w-20">&nbsp;</span>
+                        <div className="flex flex-col justify-start items-start">
+                            <span className="text-stone-500 dark:text-stone-300 text-xs w-20 bg-gray-300">&nbsp;</span>
+                            <span className="bg-gray-300 w-32 mt-2">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div className="bg-gray-300 block">&nbsp;</div>
+                    <div className="bg-gray-300 block mt-1">&nbsp;</div>
+                    <div className="bg-gray-300 block mt-1">&nbsp;</div>
+                    <div className="bg-gray-300 block mt-1">&nbsp;</div>
+                </div>
+            );
         } else if (task && task.notFound) {
             return <div>Sorry! That task doesn't seem to exist.</div>;
         } else {
@@ -211,7 +227,6 @@ export default function Project() {
                         <span className="pb-1 cursor-pointer border-b border-solid border-stone-700 dark:border-white">&#8249; Back to {task?.projects?.name}</span>
                     </Link>
                 </div>
-                <LoadingPane loading={loading}></LoadingPane>
                 { renderTaskDetails() }
             </div>
         </div>

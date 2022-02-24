@@ -40,10 +40,10 @@ export default function Dropdown(props) {
                     <AlertDialog.Description>{ confirmDetails.description }</AlertDialog.Description>
                     <div className="flex flex-row justify-end mt-2">
                         <AlertDialog.Cancel asChild>
-                            <button onClick={() => setAlertOpen(false)}>{ confirmDetails.cancel || 'Cancel' }</button>
+                            <button className="bg-sky-500 text-white" onClick={() => setAlertOpen(false)}>{ confirmDetails.cancel || 'Cancel' }</button>
                         </AlertDialog.Cancel>
                         <AlertDialog.Action asChild>
-                            <button className={((confirmDetails.danger)? 'text-red-800': '') + ` font-bold ml-2 dark:bg-stone-200`} onClick={confirmDetails.action}>{ confirmDetails.proceed || 'Proceed' }</button>
+                            <button className={((confirmDetails.danger)? 'bg-red-800 hover:bg-red-500': 'border border-solid border-sky-500') + ` text-white ml-2`} onClick={confirmDetails.action}>{ confirmDetails.proceed || 'Proceed' }</button>
                         </AlertDialog.Action>
                     </div>
                 </AlertDialog.Content>
@@ -52,7 +52,7 @@ export default function Dropdown(props) {
                 <DropdownMenu.Trigger asChild>
                     {
                         (props.type === 'settings')?
-                            <button className="p-2 border-solid border border-stone-400 rounded-full w-8 h-8 flex flex-row justify-center items-center">&#8943;</button> :
+                            <button className="p-2 border-solid border bg-sky-500 border-stone-400 rounded-full w-8 h-8 flex flex-row justify-center items-center">&#8943;</button> :
                             <button className="p-2 border-solid border border-stone-400 rounded">{props.title}</button>
                     }
                 </DropdownMenu.Trigger>

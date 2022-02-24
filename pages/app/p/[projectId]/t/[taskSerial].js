@@ -122,7 +122,7 @@ export default function Project() {
         if (loading) {
             return (
                 <div className="flex-auto flex flex-col animate-pulse">
-                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
+                    <div className="flex flex-row justify-between pb-2 border-b border-stone-400 border-solid">
                         <div className="text-3xl bg-gray-300 w-full mt-1">&nbsp;</div>
                     </div>
                     <div className="py-4 flex flex-row justify-between items-center">
@@ -143,7 +143,7 @@ export default function Project() {
         } else {
             return (
                 <div className="flex-auto flex flex-col">
-                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
+                    <div className="flex flex-row justify-between pb-2 border-b border-stone-400 border-solid">
                         {
                             (editing)?
                                 <input
@@ -190,13 +190,13 @@ export default function Project() {
                                 onChange={(e) => setNewDescription(e.target.value)} /> :
                             <ReactMarkdown className="prose prose-stone dark:prose-invert lg:max-w-none">{task.description}</ReactMarkdown>
                     }
-                    <div className={((!editing)? 'hidden' : '') + ` mt-2 dark:bg-stone-700 p-2 flex flex-row items-end justify-between border-t border-solid border-orange-600`}>
+                    <div className={((!editing)? 'hidden' : '') + ` mt-2 dark:bg-stone-700 p-2 flex flex-row items-end justify-between border-t border-solid border-stone-400`}>
                         {
                             (editing)?
                             (
                                 <>
-                                    <button onClick={() => setEditing(false)} className="text-xl p-2 border border-solid border-stone-300 text-black dark:text-white rounded">Cancel</button>
-                                    <button onClick={saveTaskEdits} className="text-xl p-2 border border-solid border-orange-600 text-black dark:text-white rounded">Save</button>
+                                    <button onClick={() => setEditing(false)} className="text-xl p-2 border border-solid border-stone-300 rounded">Cancel</button>
+                                    <button onClick={saveTaskEdits} className="text-xl p-2 rounded">Save</button>
                                 </>
                             ) : <></>
                         }

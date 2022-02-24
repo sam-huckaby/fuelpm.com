@@ -7,7 +7,6 @@ import { supabase } from "../../../utils/supabaseClient";
 
 import AuthGuard from '../../../components/auth/AuthGuard';
 import FloatingHeader from '../../../components/common/FloatingHeader';
-import LoadingPane from "../../../components/common/LoadingPane";
 
 export default function CreateTask() {
     // The router to move the user to the newly created tasks's detail page
@@ -103,51 +102,50 @@ export default function CreateTask() {
     }
 
     function renderForm() {
-        if (loading) {
-            // Perhaps replace this with some fancy shimmering data boxes while people wait
-            return <></>;
-        } else {
-            return (
-                <div className="flex flex-col flex-auto">
-                    <div className="flex flex-col pt-3">
-                        <label htmlFor="project_name">Name</label>
-                        <input
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                            className="rounded border border-solid border-orange-600 bg-transparent h-8"
-                            type="text"
-                            name="name"
-                            id="project_name" />
-                    </div>
-                    <div className="flex flex-row items-end pt-3">
-                        <div className="flex flex-col flex-auto">
-                            <label htmlFor="project_name">Starting State</label>
-                            <select
-                                onChange={e => setState(e.target.value)}
-                                defaultValue={availableStates[0].id}
-                                className="rounded border border-solid border-orange-600 bg-transparent h-8">
-                                {
-                                    availableStates &&
-                                    availableStates.map((cur, index) => 
-                                        <option key={cur.label+'_'+cur.terminal} value={cur.id}>{cur.label}</option>
-                                    )
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div className="flex-auto flex flex-col pt-3">
-                        <label htmlFor="project_description">Description</label>
-                        <textarea 
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                            className="flex-auto rounded border border-solid border-orange-600 bg-transparent h-8 p-2"
-                            name="description"
-                            rows="3"
-                            id="project_description"></textarea>
+        return (
+            <div className="flex flex-col flex-auto">
+                <div className="flex flex-col pt-3">
+                    <label htmlFor="project_name">Name</label>
+                    <input
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        className="rounded border border-solid border-stone-400 bg-transparent h-8"
+                        type="text"
+                        name="name"
+                        id="project_name" />
+                </div>
+                <div className="flex flex-row items-end pt-3">
+                    <div className="flex flex-col flex-auto">
+                        <label htmlFor="project_name">Starting State</label>
+                        {
+                            (loading)?
+                                <div className="bg-gray-300 animate-pulse">&nbsp;</div> :
+                                <select
+                                    onChange={e => setState(e.target.value)}
+                                    defaultValue={availableStates[0].id}
+                                    className="rounded border border-solid border-stone-400 bg-transparent h-8">
+                                    {
+                                        availableStates &&
+                                        availableStates.map((cur, index) => 
+                                            <option key={cur.label+'_'+cur.terminal} value={cur.id}>{cur.label}</option>
+                                        )
+                                    }
+                                </select>
+                        }
                     </div>
                 </div>
-            );
-        }
+                <div className="flex-auto flex flex-col pt-3">
+                    <label htmlFor="project_description">Description</label>
+                    <textarea 
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        className="flex-auto rounded border border-solid border-stone-400 bg-transparent h-8 p-2"
+                        name="description"
+                        rows="3"
+                        id="project_description"></textarea>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -166,16 +164,23 @@ export default function CreateTask() {
             <AuthGuard></AuthGuard>
             <FloatingHeader></FloatingHeader>
             <div className="flex-auto dark:bg-stone-700 dark:text-white flex flex-col p-2 relative">
-                <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-orange-600">
+                <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-stone-400">
                     <span className="text-2xl font-mono">Task Details:</span>
                     <Link href={`/app/p/${router.query.project_id}`}><button>Cancel</button></Link>
                 </div>
-                <LoadingPane loading={loading}></LoadingPane>
                 { renderForm() }
             </div>
-            <div className={((loading)? 'hidden' : '') + ` dark:bg-stone-700 p-2 flex flex-row items-center justify-between border-t border-solid border-orange-600`}>
-                <button onClick={() => reset()} className="text-xl p-2 border border-solid border-stone-300 text-black dark:text-white rounded">Reset</button>
-                <button onClick={() => save()} className="text-xl p-2 border border-solid border-orange-600 text-black dark:text-white rounded">Save</button>
+            <div className={((loading)? 'hidden' : '') + ` dark:bg-stone-700 p-2 flex flex-row items-center justify-between border-t border-solid border-stone-400`}>
+                {
+                    (loading)?
+                        <div className="bg-gray-300 animate-pulse w-20">&nbsp;</div> :
+                        <button onClick={() => reset()} className="text-xl p-2 dark:text-white rounded">Reset</button>
+                }
+                {
+                    (loading)?
+                        <div className="bg-gray-300 animate-pulse w-20">&nbsp;</div> :
+                        <button onClick={() => save()} className="text-xl p-2 dark:text-white rounded">Save</button>
+                }
             </div>
         </div>
     );

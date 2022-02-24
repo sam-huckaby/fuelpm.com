@@ -92,10 +92,15 @@ export default function Project() {
         if (loading) {
             return (
                 <>
-                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid animate-pulse">
+                    <div className="flex flex-row justify-between pb-2 border-b border-stone-400 border-solid animate-pulse">
                         <div className="text-3xl bg-gray-300 flex-auto">&nbsp;</div>
                     </div>
-                    <div className="text-sm mt-2 bg-gray-300 animate-pulse">&nbsp;</div>
+                    <div className="text-sm mt-2 bg-gray-300 animate-pulse">
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                    </div>
                     <div className="flex flex-row justify-end">
                         <></>
                     </div>
@@ -132,7 +137,7 @@ export default function Project() {
         } else {
             return (
                 <>
-                    <div className="flex flex-row justify-between pb-2 border-b border-orange-600 border-solid">
+                    <div className="flex flex-row justify-between pb-2 border-b border-stone-400 border-solid">
                         {
                             (editing)?
                                 <input

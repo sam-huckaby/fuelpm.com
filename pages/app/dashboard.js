@@ -112,7 +112,7 @@ export default function Dashboard() {
             return <div className="flex flex-col md:flex-row md:flex-wrap">
                 {
                     nextTasks.map((cur, index) => 
-                        <div key={index} className="flex flex-col md:w-96 md:h-48 md:mr-4 border-2 border-solid border-orange-600 p-2 mb-4">
+                        <div key={index} className="flex flex-col md:w-96 md:h-48 md:mr-4 border-stone-400 border-solid border p-2 mb-4">
                             <div className="text-sm">{cur.project_name}</div>
                             <div className="flex flex-row justify-between pb-2 border-b border-solid border-stone-400">
                                 <div className="font-bold">{cur.task_name}</div>
@@ -136,7 +136,7 @@ export default function Dashboard() {
                 }
             </div>;
         } else {
-            return <div className="flex flex-row justify-center items-center border border-solid border-orange-600 p-2 md:h-48">There's nothing for you to do right now!</div>
+            return <div className="flex flex-row justify-center items-center border border-solid border-sky-500 p-2 md:h-48">There's nothing for you to do right now!</div>
         }
     }
 

@@ -189,7 +189,7 @@ export default function Project() {
                             </div>
                         </div>
                         <div className="hidden sm:block sm:flex-auto">&nbsp;</div>
-                        <button onClick={() => addTask()} className="p-0 border-solid border border-stone-400 rounded-full flex flex-col justify-center items-center h-8 w-8">&#43;</button>
+                        <button onClick={() => addTask()} className="p-0 rounded-full flex flex-col justify-center items-center h-8 w-8">&#43;</button>
                     </div>
                     <div className="flex flex-col md:flex-row md:flex-wrap">
                         {renderTasks()}
@@ -222,7 +222,7 @@ export default function Project() {
                                 md:mr-2 md:justify-start md:items-start md:h-60 md:w-64`}>
                                 <div className="flex flex-row md:w-full justify-between items-center">
                                     <span className="flex-1 text-ellipsis overflow-hidden whitespace-nowrap">{cur.name}</span>
-                                    <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
+                                    <span style={{backgroundColor: cur.states.color, color: textColorChoice(cur.states.color)}} className="ml-3 mb-2 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.states.label}</span>
                                 </div>
                                 <span className="text-stone-600 dark:text-stone-300 pt-2 border-t border-solid border-stone-600 dark:border-stone-300 md:line-clamp-6 md:w-full">{cur.description}</span>
                             </div>

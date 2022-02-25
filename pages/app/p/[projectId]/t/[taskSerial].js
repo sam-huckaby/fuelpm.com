@@ -179,7 +179,7 @@ export default function Project() {
                         </div>
                     </div>
                     <div className={((editing)? 'flex' : 'hidden') + ` my-2 flex-row justify-center items-center`}>
-                        <span>Fuel Supports <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener"><span className="underline">Markdown</span> <div className="inline-block rounded border-stone-700 border-solid border"><span className="w-3 h-3 flex flex-row justify-center items-center bg-white translate-x-[2px] -translate-y-[2px]">&#8599;</span></div></a></span>
+                        <span>Fuel Supports <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener"><span className="underline">Markdown</span> <div className="inline-block rounded border-stone-700 dark:border-white border-solid border"><span className="w-3 h-3 flex flex-row justify-center items-center bg-neutral-100 dark:bg-stone-700 translate-x-[2px] -translate-y-[2px]">&#8599;</span></div></a></span>
                     </div>
                     {
                         (editing)?

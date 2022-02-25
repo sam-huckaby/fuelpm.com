@@ -52,8 +52,8 @@ export default function Dropdown(props) {
                 <DropdownMenu.Trigger asChild>
                     {
                         (props.type === 'settings')?
-                            <button className="p-2 border-solid border bg-sky-500 border-stone-400 rounded-full w-8 h-8 flex flex-row justify-center items-center">&#8943;</button> :
-                            <button className="p-2 border-solid border border-stone-400 rounded">{props.title}</button>
+                            <button className="p-2 bg-sky-500 rounded-full w-8 h-8 flex flex-row justify-center items-center">&#8943;</button> :
+                            <button className="p-2 rounded">{props.title}</button>
                     }
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content className="right-0 py-2 mt-2 bg-white dark:bg-stone-700 rounded-md shadow-2xl w-44 border border-solid border-stone-700 dark:border-black">

@@ -101,7 +101,7 @@ export default function AllProjects(props) {
             <div className="flex-auto p-2 flex flex-col">
                 <div className="flex flex-row items-center justify-between pb-2 border-b border-solid border-stone-400">
                     <span className="text-3xl text-black dark:text-white font-mono">Projects</span>
-                    <Link href="/app/projects/create"><button className={((projects?.length < 5)? 'relative' : 'hidden') + ` text-xl p-2 rounded`}>&#43;&nbsp;Create</button></Link>
+                    <Link href="/app/projects/create"><button className={((projects?.length < 5)? 'relative' : 'hidden') + ` text-xl p-2 rounded`}>&#xFF0B;&nbsp;Create</button></Link>
                 </div>
                 {renderProjects()}
             </div>

@@ -189,7 +189,7 @@ export default function Project() {
                             </div>
                         </div>
                         <div className="hidden sm:block sm:flex-auto">&nbsp;</div>
-                        <button onClick={() => addTask()} className="p-0 rounded-full flex flex-col justify-center items-center h-8 w-8">&#43;</button>
+                        <button onClick={() => addTask()} className="p-0 rounded-full flex flex-col justify-center items-center h-8 w-8">&#xFF0B;</button>
                     </div>
                     <div className="flex flex-col md:flex-row md:flex-wrap">
                         {renderTasks()}

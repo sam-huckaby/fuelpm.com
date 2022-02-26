@@ -24,21 +24,11 @@
     /* Default styles for buttons */
     button {
         /* Generic styles */
-        @apply rounded border bg-transparent p-1;
+        @apply rounded bg-transparent p-1;
 
         @apply bg-sky-500;
         @apply text-white;
         @apply hover:bg-sky-600;
-
-        /* Light-mode styles */
-        /* @apply border-stone-700;
-        @apply text-stone-700;
-        @apply hover:bg-stone-700/10 active:bg-stone-700/20; */
-
-        /* Dark-mode styles */
-        /* @apply dark:border-white;
-        @apply dark:text-white;
-        @apply hover:dark:bg-white/10 active:dark:bg-white/20; */
     }
 
     input, select, textarea {

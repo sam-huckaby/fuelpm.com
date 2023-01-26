@@ -94,7 +94,7 @@ export default function LoginForm() {
                     <Separator.Root className="mt-4 mb-2 h-[1px] flex-auto px-2 bg-stone-400" />
                 </div>
                 <div className="flex flex-col justify-center items-center pb-4 mx-4 relative h-[80px]">
-                    <button onClick={googleLogin} className="bg-white dark:bg-blue-600 py-0 px-4 border border-solid border-black h-[46px] w-full flex flex-row justify-center items-center"><span className="relative block h-[40px] w-[40px] overflow-hidden mr-2"><Image src="/btn_google_light_normal_ios.svg" height={46} width={46} /></span> Continue With Google</button>
+                    <button onClick={googleLogin} className="bg-white text-black hover:text-white dark:hover:text-black dark:bg-blue-600 py-0 px-4 border border-solid border-black h-[46px] w-full flex flex-row justify-center items-center"><span className="relative block h-[40px] w-[40px] overflow-hidden mr-2"><Image src="/btn_google_light_normal_ios.svg" height={46} width={46} /></span> Continue With Google</button>
                 </div>
             </div>
         </div>

@@ -1,3 +1,19 @@
+/*
+    This page needs to handle a variety of scenarios, each with unique paths forward for the user
+    1. The user has no projects at all
+        In this case, the user should be nudged towards the projects screen
+        The projects screen should handle directing a user to create an initial project
+        Display text: "Let's get started by adding a project to work on!"
+    2. The user has one or more projects, but no unfinished tasks
+        In this case, the user should be nudged towards the projects screen
+        The projects screen should handle directing a user to create a new project or add tasks
+        Display text: "Looks like you're all caught up on your projects, do you want to add some tasks?"
+    3. The user has one or more projects with one or more unfinished tasks
+        In this case, the user should be given a list of next steps that will allow them to jump back in
+        Each "next step" should allow the user to go directly to the task or go directly to the project it is in
+        Display text: "Here are the next tasks to do in your projects, time to dive back in!"
+*/
+
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -68,7 +84,7 @@ export default function Dashboard() {
                                 <span className="block">&nbsp;</span>
                             </div>
                         </div>
-                        <div className="flex-auto p-2 line-clamp-2 mt-1 bg-gray-300">
+                        <div className="flex-auto p-2 hidden md:line-clamp-2 mt-1 bg-gray-300">
                             <span className="block">&nbsp;</span>
                             <span className="block">&nbsp;</span>
                         </div>
@@ -93,7 +109,7 @@ export default function Dashboard() {
                                 <span className="block">&nbsp;</span>
                             </div>
                         </div>
-                        <div className="flex-auto p-2 line-clamp-2 mt-1 bg-gray-300">
+                        <div className="flex-auto p-2 hidden md:line-clamp-2 mt-1 bg-gray-300">
                             <span className="block">&nbsp;</span>
                             <span className="block">&nbsp;</span>
                         </div>
@@ -120,7 +136,7 @@ export default function Dashboard() {
                                     <span style={{backgroundColor: cur.task_state_color, color: textColorChoice(cur.task_state_color)}} className="ml-3 basis-20 w-20 text-ellipsis overflow-hidden whitespace-nowrap text-center p-1">{cur.task_state_label}</span>
                                 </div>
                             </div>
-                            <div className="flex-auto p-2 line-clamp-2">
+                            <div className="flex-auto p-2 hidden md:line-clamp-2">
                                 {cur.task_description}
                             </div>
                             <div className="flex flex-row space-between mt-2">

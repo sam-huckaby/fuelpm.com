@@ -13,7 +13,7 @@ import Dropdown from '../../../../../components/common/Dropdown';
 import StateDropdown from '../../../../../components/common/StateDropdown';
 import HelpText from '../../../../../components/common/HelpText';
 
-export default function Project() {
+export default function TaskDetail() {
     // View state values
     const [task, setTask] = useState(null);
     const [editing, setEditing] = useState(false);
@@ -158,6 +158,7 @@ export default function Project() {
                                 '' :
                                 <Dropdown title="&#8943;" type="settings" items={[
                                     { label: 'Edit', onClick: () => setEditing(true) },
+                                    { label: 'Clone Forward', onClick: () => setEditing(true) },
                                     { separator: true },
                                     { label: 'Delete This Task', onClick: deleteThisTask, classes: 'text-red-600', confirm: { title: 'Delete This Task', description: 'This will delete this task permanently, are you sure this is what you want to do?', danger: true, proceed: 'Delete', cancel: 'Cancel' } },
                                 ]}></Dropdown>

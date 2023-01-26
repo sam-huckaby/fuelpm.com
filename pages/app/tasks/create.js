@@ -179,7 +179,7 @@ export default function CreateTask() {
                 {
                     (loading)?
                         <div className="bg-gray-300 animate-pulse w-20">&nbsp;</div> :
-                        <button onClick={() => save()} className="text-xl p-2 dark:text-white rounded">Save</button>
+                        <button disabled={!name || !description} onClick={save} className="text-xl p-2 dark:text-white rounded">Save</button>
                 }
             </div>
         </div>
